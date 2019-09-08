@@ -40,6 +40,11 @@ const manifestPath = path.join(paths.clientBuild, paths.publicPath);
 app.use(
     manifestHelpers({
         manifestPath: `${manifestPath}/manifest.json`,
+        // Manifest path should prepended with cdn path for production
+        // Enable below line for production after putting related cdn link here
+        // prependPath: '//cdn.example/assets'
+        // Cache can be only enabled for production
+        // cache: process.env.NODE_ENV === 'production'
     })
 );
 
@@ -47,6 +52,7 @@ app.use(serverRenderer());
 
 app.use(errorHandler);
 
+// After build "node server.js" command will start the server. It will work on localhost. With Nginx reverse proxy your domain to localhost:8500
 app.listen(process.env.PORT || 8500, () => {
     console.log(
         `[${new Date().toISOString()}]`,

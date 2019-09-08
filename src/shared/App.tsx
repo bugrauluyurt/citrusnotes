@@ -22,8 +22,8 @@ const App: React.FC<any> = () => {
     return (
         <div className={css.wrapper}>
             <Helmet
-                defaultTitle="React SSR Starter – TypeScript Edition"
-                titleTemplate="%s – React SSR Starter – TypeScript Edition"
+                defaultTitle="CitrusNotes - Time tracking with simple notes"
+                titleTemplate="%s – Time tracking with simple notes"
                 link={[{ rel: 'icon', type: 'image/png', href: favicon }]}
             />
             <h1>
