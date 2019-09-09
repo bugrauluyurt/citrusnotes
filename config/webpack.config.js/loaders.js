@@ -4,6 +4,7 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
+const scssRegex = /\.scss$/;
 
 // temporary wrapper function around getCSSModuleLocalIdent until this issue is resolved:
 // https://github.com/webpack-contrib/css-loader/pull/965
@@ -111,6 +112,33 @@ const cssLoaderServer = {
     use: [MiniCssExtractPlugin.loader, require.resolve('css-loader')],
 };
 
+const scssLoaderClient = {
+    test: scssRegex,
+    exclude: /node_modules/,
+    use: [
+        require.resolve('css-hot-loader'),
+        MiniCssExtractPlugin.loader,
+        require.resolve('css-loader'),
+        {
+            loader: require.resolve('postcss-loader'),
+            options: {
+                sourceMap: generateSourceMap,
+            },
+        },
+        require.resolve('sass-loader'),
+    ],
+};
+
+const scssLoaderServer = {
+    test: /\.scss$/,
+    exclude: /node_modules/,
+    use: [
+        MiniCssExtractPlugin.loader,
+        require.resolve('css-loader'),
+        require.resolve('sass-loader'),
+    ],
+};
+
 const urlLoaderClient = {
     test: /\.(png|jpe?g|gif|svg)$/,
     loader: require.resolve('url-loader'),
@@ -159,6 +187,7 @@ const client = [
             babelLoader,
             cssModuleLoaderClient,
             cssLoaderClient,
+            scssLoaderClient,
             urlLoaderClient,
             fileLoaderClient,
         ],
@@ -170,6 +199,7 @@ const server = [
             babelLoader,
             cssModuleLoaderServer,
             cssLoaderServer,
+            scssLoaderServer,
             urlLoaderServer,
             fileLoaderServer,
         ],
