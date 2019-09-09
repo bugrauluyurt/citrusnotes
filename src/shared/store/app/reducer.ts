@@ -1,17 +1,19 @@
-import { produce } from 'immer';
-import { ActionTypes } from './actions';
+import { reducerFactory } from 'store/reducerFactory';
+
+import { AppActions } from './actions';
 import { Action, AppState } from './types';
 
 export const initialState = Object.freeze<AppState>({
     locale: 'en_US',
 });
 
-export default (state: AppState = initialState, action: Action): AppState =>
-    produce(state, (draft) => {
-        switch (action.type) {
-            case ActionTypes.SETLOCALE: {
-                draft.locale = action.payload;
-                return;
-            }
-        }
-    });
+const appReducer = reducerFactory(
+    {
+        [AppActions.SET_LOCALE]: (state: AppState, action: Action) => {
+            return { ...state, locale: action.payload };
+        },
+    },
+    initialState
+);
+
+export default appReducer;

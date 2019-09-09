@@ -1,4 +1,3 @@
-import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createRootReducer from './rootReducer';
 
@@ -18,7 +17,7 @@ export const configureStore = ({ initialState, middleware = [] }: StoreParams) =
     const store = createStore(
         createRootReducer(),
         initialState,
-        composeEnhancers(applyMiddleware(...[thunk].concat(...middleware)))
+        composeEnhancers(applyMiddleware(...middleware))
     );
 
     if (process.env.NODE_ENV !== 'production') {

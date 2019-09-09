@@ -3,6 +3,7 @@ import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { routerMiddleware } from 'react-router-redux';
 
 import { configureStore } from '../shared/store';
 import App from '../shared/App';
@@ -17,6 +18,7 @@ const store =
     window.store ||
     configureStore({
         initialState: window.__PRELOADED_STATE__,
+        middleware: [routerMiddleware(history)],
     });
 
 hydrate(

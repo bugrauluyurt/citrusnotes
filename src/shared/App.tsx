@@ -7,7 +7,6 @@ import favicon from '../shared/assets/favicon.png';
 import { setLocale } from './store/app/actions';
 import { Locale } from './store/app/types';
 import { ReactComponent as ReactLogo } from './assets/react.svg';
-import css from './App.module.css';
 
 const App: React.FC<any> = () => {
     const { t } = useTranslation();
@@ -20,15 +19,14 @@ const App: React.FC<any> = () => {
     );
 
     return (
-        <div className={css.wrapper}>
+        <div>
             <Helmet
                 defaultTitle="CitrusNotes - Time tracking with simple notes"
                 titleTemplate="%s – Time tracking with simple notes"
                 link={[{ rel: 'icon', type: 'image/png', href: favicon }]}
             />
             <h1>
-                <ReactLogo className={css.reactLogo} /> React + Express – SSR Starter – TypeScript
-                Edition
+                <ReactLogo />
             </h1>
             <Features />
             <h2>{t('i18n-example')}</h2>

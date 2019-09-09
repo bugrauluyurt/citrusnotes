@@ -1,10 +1,10 @@
 import { Locale } from './types';
 
-export const ActionTypes = {
-    SETLOCALE: 'app/set-locale',
-};
+export enum AppActions {
+    SET_LOCALE = 'app/set-locale',
+}
 
 export const setLocale = (locale: Locale) => ({
-    type: ActionTypes.SETLOCALE,
+    type: AppActions.SET_LOCALE,
     payload: locale,
 });

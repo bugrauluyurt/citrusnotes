@@ -1,4 +1,6 @@
 import * as express from 'express';
+import { routerMiddleware } from 'react-router-redux';
+import createHistory from 'store/history';
 import { configureStore } from '../../shared/store';
 
 const addStore = (
@@ -6,7 +8,8 @@ const addStore = (
     res: express.Response,
     next: express.NextFunction
 ): void => {
-    res.locals.store = configureStore({});
+    const history = createHistory();
+    res.locals.store = configureStore({ middleware: [routerMiddleware(history)] });
     next();
 };
 
