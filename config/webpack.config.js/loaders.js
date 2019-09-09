@@ -4,7 +4,7 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
-const scssRegex = /\.scss$/;
+const scssModuleRegex = /\.module\.scss$/;
 
 // temporary wrapper function around getCSSModuleLocalIdent until this issue is resolved:
 // https://github.com/webpack-contrib/css-loader/pull/965
@@ -112,30 +112,50 @@ const cssLoaderServer = {
     use: [MiniCssExtractPlugin.loader, require.resolve('css-loader')],
 };
 
-const scssLoaderClient = {
-    test: scssRegex,
-    exclude: /node_modules/,
-    use: [
-        require.resolve('css-hot-loader'),
+const scssModuleLoaderServer = {
+    test: scssModuleRegex,
+    loader: [
         MiniCssExtractPlugin.loader,
-        require.resolve('css-loader'),
         {
-            loader: require.resolve('postcss-loader'),
+            loader: 'css-loader',
+            options: {
+                modules: {
+                    // getLocalIdent: getCSSModuleLocalIdent,
+                    getLocalIdent: getLocalIdentWorkaround,
+                },
+                sourceMap: generateSourceMap,
+            },
+        },
+        {
+            loader: 'sass-loader',
             options: {
                 sourceMap: generateSourceMap,
             },
         },
-        require.resolve('sass-loader'),
     ],
 };
 
-const scssLoaderServer = {
-    test: /\.scss$/,
-    exclude: /node_modules/,
-    use: [
+const scssModuleLoaderClient = {
+    test: scssModuleRegex,
+    loader: [
+        require.resolve('css-hot-loader'),
         MiniCssExtractPlugin.loader,
-        require.resolve('css-loader'),
-        require.resolve('sass-loader'),
+        {
+            loader: 'css-loader',
+            options: {
+                modules: {
+                    // getLocalIdent: getCSSModuleLocalIdent,
+                    getLocalIdent: getLocalIdentWorkaround,
+                },
+                sourceMap: generateSourceMap,
+            },
+        },
+        {
+            loader: 'sass-loader',
+            options: {
+                sourceMap: generateSourceMap,
+            },
+        },
     ],
 };
 
@@ -187,7 +207,7 @@ const client = [
             babelLoader,
             cssModuleLoaderClient,
             cssLoaderClient,
-            scssLoaderClient,
+            scssModuleLoaderClient,
             urlLoaderClient,
             fileLoaderClient,
         ],
@@ -199,7 +219,7 @@ const server = [
             babelLoader,
             cssModuleLoaderServer,
             cssLoaderServer,
-            scssLoaderServer,
+            scssModuleLoaderServer,
             urlLoaderServer,
             fileLoaderServer,
         ],
