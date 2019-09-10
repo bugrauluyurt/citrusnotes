@@ -53,6 +53,15 @@ declare module '*.css' {
     export default any;
 }
 
+declare module '*.module.scss' {
+    const style: { [key: string]: string };
+    export default style;
+}
+
+declare module '*.scss' {
+    export default any;
+}
+
 declare const __BROWSER__: boolean;
 declare const __SERVER__: boolean;
 
