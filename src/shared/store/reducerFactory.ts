@@ -1,7 +1,7 @@
 import { get, isFunction } from 'lodash';
 import { Action } from 'store/app/types';
 
-export const reducerFactory = (
+export const createReducer = (
     actionMap: {
         [key: string]: any;
     },
