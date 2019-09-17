@@ -29,20 +29,18 @@ const serverRenderer: any = () => (
     );
 
     const state = JSON.stringify(res.locals.store.getState());
-
-    return res.send(
-        '<!doctype html>' +
-            renderToString(
-                <Html
-                    css={[res.locals.assetPath('bundle.css'), res.locals.assetPath('vendor.css')]}
-                    helmetContext={helmetContext}
-                    scripts={[res.locals.assetPath('bundle.js'), res.locals.assetPath('vendor.js')]}
-                    state={state}
-                >
-                    {content}
-                </Html>
-            )
+    const html = renderToString(
+        <Html
+            css={[res.locals.assetPath('bundle.css'), res.locals.assetPath('vendor.css')]}
+            helmetContext={helmetContext}
+            scripts={[res.locals.assetPath('bundle.js'), res.locals.assetPath('vendor.js')]}
+            state={state}
+        >
+            {content}
+        </Html>
     );
+    console.log(html);
+    return res.send('<!doctype html>' + html);
 };
 
 export default serverRenderer;

@@ -6,7 +6,8 @@ import Features from '../shared/components/Features';
 import favicon from '../shared/assets/favicon.png';
 import { setLocale } from './store/app/actions';
 import { Locale } from './store/app/types';
-import { ReactComponent as ReactLogo } from './assets/react.svg';
+// Importing svg files
+// import { ReactComponent as ReactLogo } from './assets/react.svg';
 
 const App: React.FC<any> = () => {
     const { t } = useTranslation();
@@ -25,9 +26,6 @@ const App: React.FC<any> = () => {
                 titleTemplate="%s – Time tracking with simple notes"
                 link={[{ rel: 'icon', type: 'image/png', href: favicon }]}
             />
-            <h1>
-                <ReactLogo />
-            </h1>
             <Features />
             <h2>{t('i18n-example')}</h2>
             <p>

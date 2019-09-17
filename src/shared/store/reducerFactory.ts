@@ -1,4 +1,5 @@
-import { get, isFunction } from 'lodash-es';
+import isFunction from 'lodash/isFunction';
+import get from 'lodash/get';
 import { Action } from 'store/app/types';
 
 export const createReducer = (
