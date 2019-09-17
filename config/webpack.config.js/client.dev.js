@@ -1,6 +1,6 @@
-const baseConfig = require('./client.base');
 const webpack = require('webpack');
 const WriteFileWebpackPlugin = require('write-file-webpack-plugin');
+const baseConfig = require('./client.base');
 const generateSourceMap = process.env.OMIT_SOURCEMAP === 'true' ? false : true;
 
 const config = {
