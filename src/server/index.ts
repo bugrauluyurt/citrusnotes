@@ -1,4 +1,3 @@
-// import React from 'react';
 import path from 'path';
 import * as express from 'express';
 import cors from 'cors';
@@ -6,7 +5,6 @@ import chalk from 'chalk';
 import manifestHelpers from 'express-manifest-helpers';
 import bodyParser from 'body-parser';
 import paths from '../../config/paths';
-// import { configureStore } from '../shared/store';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
 import addStore from './middleware/addStore';
@@ -35,7 +33,10 @@ app.get('/locales/:locale/:ns.json', i18nextXhr);
 
 app.use(addStore);
 
-const manifestPath = path.join(paths.clientBuild, paths.publicPath);
+let manifestPath = path.join(paths.clientBuild, paths.publicPath);
+if (process.env.NODE_ENV === 'production') {
+    manifestPath = path.join(process.env.CDN_PATH || '', '/manifest.json');
+}
 
 app.use(
     manifestHelpers({

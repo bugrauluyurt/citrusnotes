@@ -6,6 +6,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { routerMiddleware } from 'react-router-redux';
 
 import { createEpicMiddleware } from 'redux-observable';
+import { loadableReady } from '@loadable/component';
 import { Action } from 'store/app/types';
 import { RootState } from 'store/rootReducer';
 import rootEpic from 'store/rootEpic';
@@ -27,18 +28,20 @@ const store =
 
 epicMiddleware.run(rootEpic);
 
-hydrate(
-    <Provider store={store}>
-        <Router history={history}>
-            <IntlProvider>
-                <HelmetProvider>
-                    <App />
-                </HelmetProvider>
-            </IntlProvider>
-        </Router>
-    </Provider>,
-    document.getElementById('app')
-);
+loadableReady(() => {
+    hydrate(
+        <Provider store={store}>
+            <Router history={history}>
+                <IntlProvider>
+                    <HelmetProvider>
+                        <App />
+                    </HelmetProvider>
+                </IntlProvider>
+            </Router>
+        </Provider>,
+        document.getElementById('app')
+    );
+}).then(() => console.log('Loadable components ready...'));
 
 if (process.env.NODE_ENV === 'development') {
     if (module.hot) {

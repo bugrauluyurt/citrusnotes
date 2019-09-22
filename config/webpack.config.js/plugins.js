@@ -18,7 +18,6 @@ const shared = [
         chunkFilename:
             process.env.NODE_ENV === 'development' ? '[id].css' : '[id].[contenthash].css',
     }),
-    new LoadablePlugin(),
 ];
 
 const client = [
@@ -36,6 +35,7 @@ const client = [
         __BROWSER__: 'true',
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new LoadablePlugin(),
     new ManifestPlugin({ fileName: 'manifest.json' }),
 ].filter(Boolean);
 

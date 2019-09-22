@@ -1,3 +1,4 @@
+import path from 'path';
 import * as React from 'react';
 import * as express from 'express';
 import { renderToString } from 'react-dom/server';
@@ -5,18 +6,27 @@ import { StaticRouter as Router } from 'react-router-dom';
 import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
+import { ChunkExtractor } from '@loadable/server';
 import IntlProvider from '../../shared/i18n/IntlProvider';
 import App from '../../shared/App';
 import Html from '../components/HTML';
+import paths from '../../../config/paths';
 
 const helmetContext = {};
 const routerContext = {};
+// Loadable Stats File
+const loadableStatsJson = '/loadable-stats.json';
+const statsFile =
+    process.env.NODE_ENV === 'development'
+        ? path.join(paths.clientBuild, paths.publicPath, `/${loadableStatsJson}`)
+        : path.join(process.env.CDN_PATH || './', loadableStatsJson); //@TODO For production put CDN path here
 
 const serverRenderer: any = () => (
     req: express.Request & { store: Store },
     res: express.Response
 ) => {
-    const content = renderToString(
+    const extractor = new ChunkExtractor({ statsFile, entrypoints: [] });
+    const tsx = extractor.collectChunks(
         <Provider store={res.locals.store}>
             <Router location={req.url} context={routerContext}>
                 <IntlProvider>
@@ -27,6 +37,8 @@ const serverRenderer: any = () => (
             </Router>
         </Provider>
     );
+    const content = renderToString(tsx);
+    const loadableScriptTags = extractor.getScriptTags();
 
     const state = JSON.stringify(res.locals.store.getState());
     const html = renderToString(
@@ -34,6 +46,7 @@ const serverRenderer: any = () => (
             css={[res.locals.assetPath('bundle.css'), res.locals.assetPath('vendor.css')]}
             helmetContext={helmetContext}
             scripts={[res.locals.assetPath('bundle.js'), res.locals.assetPath('vendor.js')]}
+            loadableScriptTags={loadableScriptTags}
             state={state}
         >
             {content}

@@ -1,4 +1,5 @@
 import React from 'react';
+import parse from 'html-react-parser';
 
 type Props = {
     children: any;
@@ -6,12 +7,14 @@ type Props = {
     helmetContext: any;
     scripts: string[];
     state: string;
+    loadableScriptTags: string;
 };
 
 const HTML = ({
     children,
     css = [],
     scripts = [],
+    loadableScriptTags = '',
     state = '{}',
     helmetContext: { helmet },
 }: Props) => (
@@ -39,6 +42,7 @@ const HTML = ({
         <body>
             {/* eslint-disable-next-line react/no-danger */}
             <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
+            {parse(loadableScriptTags)}
             {scripts.filter(Boolean).map((src) => (
                 <script key={src} src={src} />
             ))}
