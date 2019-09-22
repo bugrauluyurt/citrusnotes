@@ -5,7 +5,6 @@ type Props = {
     children: any;
     css: string[];
     helmetContext: any;
-    scripts: string[];
     state: string;
     loadableScriptTags: string;
 };
@@ -13,7 +12,6 @@ type Props = {
 const HTML = ({
     children,
     css = [],
-    scripts = [],
     loadableScriptTags = '',
     state = '{}',
     helmetContext: { helmet },
@@ -43,9 +41,9 @@ const HTML = ({
             {/* eslint-disable-next-line react/no-danger */}
             <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
             {parse(loadableScriptTags)}
-            {scripts.filter(Boolean).map((src) => (
-                <script key={src} src={src} />
-            ))}
+            {/*{scripts.filter(Boolean).map((src) => (*/}
+            {/*    <script key={src} src={src} />*/}
+            {/*))}*/}
         </body>
     </html>
 );

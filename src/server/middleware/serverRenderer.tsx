@@ -19,13 +19,13 @@ const loadableStatsJson = '/loadable-stats.json';
 const statsFile =
     process.env.NODE_ENV === 'development'
         ? path.join(paths.clientBuild, paths.publicPath, `/${loadableStatsJson}`)
-        : path.join(process.env.CDN_PATH || './', loadableStatsJson); //@TODO For production put CDN path here
+        : path.join(process.env.CDN_PATH || './', loadableStatsJson);
 
 const serverRenderer: any = () => (
     req: express.Request & { store: Store },
     res: express.Response
 ) => {
-    const extractor = new ChunkExtractor({ statsFile, entrypoints: [] });
+    const extractor = new ChunkExtractor({ statsFile, entrypoints: ['bundle'] });
     const tsx = extractor.collectChunks(
         <Provider store={res.locals.store}>
             <Router location={req.url} context={routerContext}>
@@ -45,14 +45,12 @@ const serverRenderer: any = () => (
         <Html
             css={[res.locals.assetPath('bundle.css'), res.locals.assetPath('vendor.css')]}
             helmetContext={helmetContext}
-            scripts={[res.locals.assetPath('bundle.js'), res.locals.assetPath('vendor.js')]}
             loadableScriptTags={loadableScriptTags}
             state={state}
         >
             {content}
         </Html>
     );
-    console.log(html);
     return res.send('<!doctype html>' + html);
 };
 

@@ -15,20 +15,20 @@ import App from '../shared/App';
 import IntlProvider from '../shared/i18n/IntlProvider';
 import createHistory from '../shared/store/history';
 
-const history = createHistory();
-const epicMiddleware = createEpicMiddleware<Action, Action, RootState>();
-// Create/use the store
-// history MUST be passed here if you want syncing between server on initial route
-const store =
-    window.store ||
-    configureStore({
-        initialState: window.__PRELOADED_STATE__,
-        middleware: [routerMiddleware(history), epicMiddleware],
-    });
-
-epicMiddleware.run(rootEpic);
-
 loadableReady(() => {
+    const history = createHistory();
+    const epicMiddleware = createEpicMiddleware<Action, Action, RootState>();
+    // Create/use the store
+    // history MUST be passed here if you want syncing between server on initial route
+    const store =
+        window.store ||
+        configureStore({
+            initialState: window.__PRELOADED_STATE__,
+            middleware: [routerMiddleware(history), epicMiddleware],
+        });
+
+    epicMiddleware.run(rootEpic);
+
     hydrate(
         <Provider store={store}>
             <Router history={history}>
@@ -41,14 +41,13 @@ loadableReady(() => {
         </Provider>,
         document.getElementById('app')
     );
-}).then(() => console.log('Loadable components ready...'));
+}).then(() => console.log('[Loadable] Components ready'));
 
 if (process.env.NODE_ENV === 'development') {
     if (module.hot) {
         module.hot.accept();
     }
-
-    if (!window.store) {
-        window.store = store;
-    }
+    // if (!window.store) {
+    //     window.store = store;
+    // }
 }
