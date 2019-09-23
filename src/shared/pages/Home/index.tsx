@@ -1,13 +1,16 @@
 import React from 'react';
+import styles from './Home.module.scss';
 
 const Home = () => {
     const handleClick = (): void => {
         console.log('Home header');
     };
     return (
-        <React.Fragment>
-            <h1 onClick={handleClick}>Home component header</h1>
-        </React.Fragment>
+        <div className={styles.wrapper}>
+            <h1 className={styles.redColor} onClick={handleClick}>
+                Home component
+            </h1>
+        </div>
     );
 };
 

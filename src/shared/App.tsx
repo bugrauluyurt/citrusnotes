@@ -3,13 +3,15 @@ import { Helmet } from 'react-helmet-async';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link, Route } from 'react-router-dom';
+import { Button } from 'antd';
 import { Authorization, Home, Settings } from 'lazyRoutes';
 import { setLocale } from 'store/app/actions';
 import { Locale } from 'store/app/types';
-import Features from '../shared/components/Features';
+import Features from 'components/Features';
 import favicon from '../shared/assets/favicon.png';
 // Importing svg files example
 // import { ReactComponent as ReactLogo } from './assets/react.svg';
+import 'antd/dist/antd.min.css';
 
 const App: React.FC<any> = () => {
     const { t } = useTranslation();
@@ -28,8 +30,8 @@ const App: React.FC<any> = () => {
                 titleTemplate="%s – Time tracking with simple notess"
                 link={[{ rel: 'icon', type: 'image/png', href: favicon }]}
             />
-            <Features />
             <h2>{t('i18n-example')}</h2>
+            <Features />
             <p>
                 <button value="de_DE" onClick={handleLocaleChange}>
                     Deutsch
@@ -38,6 +40,7 @@ const App: React.FC<any> = () => {
                     English
                 </button>
             </p>
+            <Button type="primary">Primary</Button>
             <ul>
                 <li>
                     <Link to="/">Home</Link>

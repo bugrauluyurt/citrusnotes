@@ -39,13 +39,16 @@ const serverRenderer: any = () => (
     );
     const content = renderToString(tsx);
     const loadableScriptTags = extractor.getScriptTags();
+    const loadableStyleTags = extractor.getStyleTags();
 
     const state = JSON.stringify(res.locals.store.getState());
     const html = renderToString(
         <Html
             css={[res.locals.assetPath('bundle.css'), res.locals.assetPath('vendor.css')]}
+            scripts={[res.locals.assetPath('bundle.js'), res.locals.assetPath('vendor.js')]}
             helmetContext={helmetContext}
             loadableScriptTags={loadableScriptTags}
+            loadableStyleTags={loadableStyleTags}
             state={state}
         >
             {content}
