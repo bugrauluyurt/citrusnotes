@@ -1,7 +1,6 @@
 import * as express from 'express';
 import { createEpicMiddleware } from 'redux-observable';
 import { routerMiddleware } from 'connected-react-router';
-import createHistory from 'store/history';
 import { Action } from 'store/app/types';
 import { RootState } from 'store/rootReducer';
 import rootEpic from 'store/rootEpic';
@@ -12,13 +11,11 @@ const addStore = (
     res: express.Response,
     next: express.NextFunction
 ): void => {
-    const history = createHistory({ initialEntries: [_req.path] });
     const epicMiddleware = createEpicMiddleware<Action, Action, RootState>();
     res.locals.store = configureStore({
-        middleware: [routerMiddleware(history), epicMiddleware],
-        history,
+        middleware: [routerMiddleware(res.locals.history), epicMiddleware],
+        history: res.locals.history,
     });
-    res.locals.history = history;
     epicMiddleware.run(rootEpic);
     next();
 };

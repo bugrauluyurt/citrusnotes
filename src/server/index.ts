@@ -4,6 +4,7 @@ import cors from 'cors';
 import chalk from 'chalk';
 import manifestHelpers from 'express-manifest-helpers';
 import bodyParser from 'body-parser';
+import addHistory from 'middleware/addHistory';
 import paths from '../../config/paths';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
@@ -31,6 +32,7 @@ app.get('/locales/refresh', webhookVerification, refreshTranslations);
 // It's probably a good idea to serve these static assets with Nginx or Apache as well:
 app.get('/locales/:locale/:ns.json', i18nextXhr);
 
+app.use(addHistory);
 app.use(addStore);
 
 let manifestPath = path.join(paths.clientBuild, paths.publicPath);

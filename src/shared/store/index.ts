@@ -25,7 +25,9 @@ export const configureStore = ({ initialState, middleware = [], history }: Store
     );
 
     if (process.env.NODE_ENV !== 'production') {
+        // @ts-ignore
         if (module.hot) {
+            // @ts-ignore
             module.hot.accept('./rootReducer', () =>
                 store.replaceReducer(require('./rootReducer').default)
             );
