@@ -5,6 +5,7 @@ export interface User {
 }
 
 export type UserState = Readonly<{
-    user: User | null;
+    data: User | null;
+    isAnonymous: boolean;
     loading: boolean;
 }>;

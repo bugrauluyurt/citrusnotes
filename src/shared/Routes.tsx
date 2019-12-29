@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { get as _get } from 'lodash';
-import { UserState } from 'store/user/types';
+import { useSelector } from 'react-redux';
 import { Authentication, Settings, Browse } from 'lazyRoutes';
+import { isUserAnonymous } from 'store/user/selectors';
 
-const privateRouteFn: React.FC<any> = ({ children, ...rest }) => {
+const PrivateRoute: React.FC<any> = ({ children, ...rest }) => {
+    const isAnonymous = useSelector(isUserAnonymous);
     return (
         <Route
             {...rest}
             render={({ location }: any) =>
-                rest.isAuthenticated ? (
+                !isAnonymous ? (
                     children
                 ) : (
                     <Redirect
@@ -24,9 +24,6 @@ const privateRouteFn: React.FC<any> = ({ children, ...rest }) => {
         />
     );
 };
-const PrivateRoute = connect((state: { user: UserState }) => ({
-    user: !!_get(state.user, 'user'),
-}))(privateRouteFn);
 
 const Routes: React.FC<any> = () => {
     return (

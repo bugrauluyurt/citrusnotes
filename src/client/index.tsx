@@ -24,11 +24,11 @@ const store = configureStore({
     history,
 });
 
-let render = async (storeFromHotReloading?: Store) => {
+let render = async (presetStore?: Store) => {
     await loadableReady(() => {
         epicMiddleware.run(rootEpic);
         hydrate(
-            <Provider store={storeFromHotReloading || store}>
+            <Provider store={presetStore || store}>
                 <ConnectedRouter history={history}>
                     <IntlProvider>
                         <HelmetProvider>
