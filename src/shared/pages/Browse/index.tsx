@@ -8,7 +8,7 @@ const Browse = () => {
     return (
         <div className={styles.wrapper}>
             <h1 className={styles.redColor} onClick={handleClick}>
-                Browse component
+                Browse component header
             </h1>
         </div>
     );

@@ -6,7 +6,7 @@ const Authentication = () => {
     };
     return (
         <React.Fragment>
-            <h1 onClick={handleClick}>Authentication component header</h1>
+            <h1 onClick={handleClick}>Authentication component</h1>
         </React.Fragment>
     );
 };
