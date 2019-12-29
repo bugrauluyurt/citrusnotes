@@ -2,13 +2,9 @@ import path from 'path';
 import * as React from 'react';
 import * as express from 'express';
 import { renderToString } from 'react-dom/server';
-import { Provider } from 'react-redux';
-import { HelmetProvider } from 'react-helmet-async';
 import { ChunkExtractor } from '@loadable/server';
-import { ConnectedRouter } from 'connected-react-router';
 import { Store } from 'redux';
-import IntlProvider from '../../shared/i18n/IntlProvider';
-import App from '../../shared/App';
+import Root from 'Root';
 import Html from '../components/HTML';
 import paths from '../../../config/paths';
 
@@ -27,15 +23,7 @@ const serverRenderer: any = () => (
 ) => {
     const extractor = new ChunkExtractor({ statsFile, entrypoints: ['bundle'] });
     const tsx = extractor.collectChunks(
-        <Provider store={res.locals.store}>
-            <ConnectedRouter history={res.locals.history}>
-                <IntlProvider>
-                    <HelmetProvider context={helmetContext}>
-                        <App />
-                    </HelmetProvider>
-                </IntlProvider>
-            </ConnectedRouter>
-        </Provider>
+        <Root store={res.locals.store} history={res.locals.history} helmetContext={helmetContext} />
     );
     const content = renderToString(tsx);
     const loadableScriptTags = extractor.getScriptTags();

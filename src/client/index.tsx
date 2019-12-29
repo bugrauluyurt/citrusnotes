@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM, { hydrate } from 'react-dom';
-import { Provider } from 'react-redux';
-import { HelmetProvider } from 'react-helmet-async';
 import { createEpicMiddleware } from 'redux-observable';
 import { loadableReady } from '@loadable/component';
-import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
+import { routerMiddleware } from 'connected-react-router';
 import { Store } from 'redux';
 import { Action } from 'store/app/types';
 import { RootState } from 'store/rootReducer';
 import rootEpic from 'store/rootEpic';
+import Root from '../shared/Root';
 import { configureStore } from '../shared/store';
-import App from '../shared/App';
-import IntlProvider from '../shared/i18n/IntlProvider';
 import createHistory from '../shared/store/history';
 
 const rootAppElement = document.getElementById('app');
@@ -27,18 +24,7 @@ const store = configureStore({
 let render = async (presetStore?: Store) => {
     await loadableReady(() => {
         epicMiddleware.run(rootEpic);
-        hydrate(
-            <Provider store={presetStore || store}>
-                <ConnectedRouter history={history}>
-                    <IntlProvider>
-                        <HelmetProvider>
-                            <App />
-                        </HelmetProvider>
-                    </IntlProvider>
-                </ConnectedRouter>
-            </Provider>,
-            rootAppElement
-        );
+        hydrate(<Root store={presetStore || store} history={history} />, rootAppElement);
     });
 };
 

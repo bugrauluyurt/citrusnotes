@@ -1,8 +1,13 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Authentication, Settings, Browse } from 'lazyRoutes';
+import loadable from '@loadable/component';
 import { isUserAnonymous } from 'store/user/selectors';
+
+// Lazy Routes
+export const Authentication = loadable(() => import('./pages/Authentication'));
+export const Browse = loadable(() => import('./pages/Browse'));
+export const Settings = loadable(() => import('./pages/Settings'));
 
 const PrivateRoute: React.FC<any> = ({ children, ...rest }) => {
     const isAnonymous = useSelector(isUserAnonymous);
