@@ -2,18 +2,17 @@ import path from 'path';
 import * as React from 'react';
 import * as express from 'express';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter as Router } from 'react-router-dom';
-import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
 import { ChunkExtractor } from '@loadable/server';
+import { ConnectedRouter } from 'connected-react-router';
+import { Store } from 'redux';
 import IntlProvider from '../../shared/i18n/IntlProvider';
 import App from '../../shared/App';
 import Html from '../components/HTML';
 import paths from '../../../config/paths';
 
 const helmetContext = {};
-const routerContext = {};
 // Loadable Stats File
 const loadableStatsJson = '/loadable-stats.json';
 const statsFile =
@@ -22,19 +21,21 @@ const statsFile =
         : path.join(process.env.CDN_PATH || './', loadableStatsJson);
 
 const serverRenderer: any = () => (
+    // @ts-ignore
     req: express.Request & { store: Store },
     res: express.Response
 ) => {
+    console.log('RESPONSE: ', res.locals);
     const extractor = new ChunkExtractor({ statsFile, entrypoints: ['bundle'] });
     const tsx = extractor.collectChunks(
         <Provider store={res.locals.store}>
-            <Router location={req.url} context={routerContext}>
+            <ConnectedRouter history={res.locals.history}>
                 <IntlProvider>
                     <HelmetProvider context={helmetContext}>
                         <App />
                     </HelmetProvider>
                 </IntlProvider>
-            </Router>
+            </ConnectedRouter>
         </Provider>
     );
     const content = renderToString(tsx);
@@ -50,6 +51,7 @@ const serverRenderer: any = () => (
             loadableScriptTags={loadableScriptTags}
             loadableStyleTags={loadableStyleTags}
             state={state}
+            browserHistory={res.locals.history}
         >
             {content}
         </Html>

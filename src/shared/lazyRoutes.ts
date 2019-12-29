@@ -1,5 +1,5 @@
 import loadable from '@loadable/component';
 
-export const Authorization = loadable(() => import('./pages/Authorization'));
-export const Home = loadable(() => import('./pages/Home'));
+export const Authentication = loadable(() => import('./pages/Authentication'));
+export const Browse = loadable(() => import('./pages/Browse'));
 export const Settings = loadable(() => import('./pages/Settings'));

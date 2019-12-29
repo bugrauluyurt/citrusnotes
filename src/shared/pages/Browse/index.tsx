@@ -1,17 +1,17 @@
 import React from 'react';
-import styles from './Home.module.scss';
+import styles from './Browse.module.scss';
 
-const Home = () => {
+const Browse = () => {
     const handleClick = (): void => {
-        console.log('Home header');
+        console.log('Browse header');
     };
     return (
         <div className={styles.wrapper}>
             <h1 className={styles.redColor} onClick={handleClick}>
-                Home component
+                Browse component
             </h1>
         </div>
     );
 };
 
-export default Home;
+export default Browse;
