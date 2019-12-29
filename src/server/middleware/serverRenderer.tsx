@@ -34,7 +34,6 @@ const serverRenderer: any = () => (
                         <App />
                     </HelmetProvider>
                 </IntlProvider>
-                q
             </ConnectedRouter>
         </Provider>
     );
