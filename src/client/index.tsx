@@ -14,7 +14,7 @@ import IntlProvider from '../shared/i18n/IntlProvider';
 import createHistory from '../shared/store/history';
 
 loadableReady(() => {
-    const history = window.browserHistory || createHistory();
+    const history = createHistory();
     const epicMiddleware = createEpicMiddleware<Action, Action, RootState>();
     // Create/use the store
     // history MUST be passed here if you want syncing between server on initial route
@@ -25,7 +25,6 @@ loadableReady(() => {
             middleware: [routerMiddleware(history), epicMiddleware],
             history,
         });
-    console.log(store);
     epicMiddleware.run(rootEpic);
 
     hydrate(

@@ -12,7 +12,7 @@ const addStore = (
     res: express.Response,
     next: express.NextFunction
 ): void => {
-    const history = createHistory();
+    const history = createHistory({ initialEntries: [_req.path] });
     const epicMiddleware = createEpicMiddleware<Action, Action, RootState>();
     res.locals.store = configureStore({
         middleware: [routerMiddleware(history), epicMiddleware],

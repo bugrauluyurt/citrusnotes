@@ -25,7 +25,6 @@ const serverRenderer: any = () => (
     req: express.Request & { store: Store },
     res: express.Response
 ) => {
-    console.log('RESPONSE: ', res.locals);
     const extractor = new ChunkExtractor({ statsFile, entrypoints: ['bundle'] });
     const tsx = extractor.collectChunks(
         <Provider store={res.locals.store}>
@@ -35,6 +34,7 @@ const serverRenderer: any = () => (
                         <App />
                     </HelmetProvider>
                 </IntlProvider>
+                q
             </ConnectedRouter>
         </Provider>
     );
@@ -51,7 +51,6 @@ const serverRenderer: any = () => (
             loadableScriptTags={loadableScriptTags}
             loadableStyleTags={loadableStyleTags}
             state={state}
-            browserHistory={res.locals.history}
         >
             {content}
         </Html>
