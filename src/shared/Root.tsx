@@ -3,8 +3,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import IntlProvider from 'i18n/IntlProvider';
 import App from 'App';
+import IntlProvider from 'i18n/IntlProvider';
 
 interface Props {
     store: Store;
