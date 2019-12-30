@@ -4,10 +4,13 @@ import { useSelector } from 'react-redux';
 import loadable from '@loadable/component';
 import { isUserAnonymous } from 'store/user/selectors';
 
+//@TODO: Loading component must be separated from routes
+const lazyRouteOptions = { fallback: <div>Loading...</div> };
+
 // Lazy Routes
-export const Authentication = loadable(() => import('./pages/Authentication'));
-export const Browse = loadable(() => import('./pages/Browse'));
-export const Settings = loadable(() => import('./pages/Settings'));
+export const Authentication = loadable(() => import('./pages/Authentication'), lazyRouteOptions);
+export const Browse = loadable(() => import('./pages/Browse'), lazyRouteOptions);
+export const Settings = loadable(() => import('./pages/Settings'), lazyRouteOptions);
 
 const PrivateRoute: React.FC<any> = ({ children, ...rest }) => {
     const isAnonymous = useSelector(isUserAnonymous);
