@@ -20,7 +20,7 @@ module.exports = {
         '@babel/syntax-dynamic-import',
         '@loadable/babel-plugin',
         'macros',
-        ['import', { libraryName: 'antd', style: true }],
+        ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
     ],
     env: {
         test: {
