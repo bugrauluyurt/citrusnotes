@@ -1,3 +1,4 @@
+import fs from 'fs';
 import React, { useEffect } from 'react';
 import i18next from 'i18next';
 import i18nextXHRBackend from 'i18next-xhr-backend';
@@ -5,15 +6,12 @@ import { I18nextProvider } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getLocale } from '../store/app/selectors';
 
-import deDE from './locales/de_DE/translation.json';
+// import deDE from './locales/de_DE/translation.json';
 import enUS from './locales/en_US/translation.json';
 
-if (__BROWSER__) {
-    i18next.use(i18nextXHRBackend);
-}
+const languages = ['en_US', 'de_DE'];
 
-// i18next.use(__BROWSER__ ? i18nextXHRBackend : {}).init({
-i18next.init({
+const i18nextOptions = {
     backend: {
         // for all available options read the backend's repository readme file
         loadPath: '/locales/{{lng}}/{{ns}}.json',
@@ -30,7 +28,7 @@ i18next.init({
     // i18next-xhr-backend, otherwise no calls will be made if resources are defined.
     partialBundledLanguages: true,
     resources: {
-        de_DE: { translation: deDE },
+        //de_DE: { translation: deDE },
         en_US: { translation: enUS },
     },
     parseMissingKeyHandler: (missing: any) => {
@@ -39,9 +37,24 @@ i18next.init({
         }
         return missing;
     },
-});
+};
 
-i18next.languages = ['de_DE', 'en_US'];
+if (__BROWSER__) {
+    i18next.use(i18nextXHRBackend);
+} else {
+    const restOfLanguages = languages.slice(1, languages.length);
+    restOfLanguages.forEach((locale: string) => {
+        // @ts-ignore
+        i18nextOptions.resources[locale] = { translation: undefined };
+        const json = fs.readFileSync(`${__dirname}/locales/${locale}/translation.json`, {
+            encoding: 'utf-8',
+        });
+        // @ts-ignore
+        i18nextOptions.resources[locale].translation = JSON.parse(json);
+    });
+}
+i18next.init(i18nextOptions);
+i18next.languages = languages;
 
 const I18N: React.FC<any> = ({ children }) => {
     const locale = useSelector(getLocale);
