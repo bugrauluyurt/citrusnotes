@@ -1,5 +1,7 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import _isObject from 'lodash/isObject';
 import { LoggerService } from 'services/LoggerService';
+import { IConnection } from 'services/connections/ConnectionInterface';
 
 const axios = require('axios');
 
@@ -13,7 +15,15 @@ const AXIOS_BASE_CONFIG = {
     },
 } as AxiosRequestConfig;
 
-export class BaseConnection {
+export enum RequestMethod {
+    POST = 'post',
+    GET = 'get',
+    PUT = 'put',
+    DELETE = 'delete',
+    PATCH = 'patch',
+}
+
+export class BaseConnection implements IConnection {
     private authorization: string | undefined;
     private connectionInstance: AxiosInstance;
 
@@ -46,11 +56,12 @@ export class BaseConnection {
     }
 
     private sanitizeParams(params?: any): any {
-        if (!params) {
+        if (!params || !_isObject(params)) {
             return {};
         }
         Object.keys(params).reduce((acc, paramKey) => {
-            const value = params[paramKey];
+            // @ts-ignore
+            const value: any = params[paramKey];
             if (!value) {
                 return acc;
             }
@@ -58,18 +69,26 @@ export class BaseConnection {
         }, {});
     }
 
-    get(url: string, params?: any, requestConfig?: AxiosRequestConfig): Promise<any> {
-        return this.connectionInstance.get(url, {
+    request(
+        url: string,
+        method: RequestMethod,
+        params?: any,
+        body?: any,
+        requestConfig?: AxiosRequestConfig
+    ): Promise<any> {
+        const config = {
+            url,
+            method,
             params: this.sanitizeParams(params),
             ...requestConfig,
-        });
-    }
-
-    post(url: string, params?: any, body?: any, requestConfig?: AxiosRequestConfig): Promise<any> {
-        return this.connectionInstance.post(url, {
-            params: this.sanitizeParams(params),
-            data: body,
-            ...requestConfig,
-        });
+        } as AxiosRequestConfig;
+        if (body) {
+            const isFormData = body instanceof FormData;
+            if (isFormData) {
+                config.headers['Content-Type'] = 'multipart/form-data';
+            }
+            config.data = !isFormData && _isObject(body) ? JSON.stringify(body) : body || '';
+        }
+        return this.connectionInstance.request(config);
     }
 }

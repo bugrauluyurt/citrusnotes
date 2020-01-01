@@ -10,7 +10,10 @@ export class LoggerService {
                 return console.error(LoggerService.ERROR_PREFIX, log);
         }
     }
-    static log(log: any, type: LogTypes = 'normal'): void {
+    static log(log: any, type: LogTypes = 'normal', bypassEnvCheck: boolean = false): void {
+        if (process.env.NODE_ENV === 'production' && !bypassEnvCheck) {
+            return;
+        }
         LoggerService.logFn(log, type);
     }
 }
