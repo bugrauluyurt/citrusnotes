@@ -3,7 +3,7 @@ import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { fetchUserSuccess, UserActions, fetchUserError } from 'store/user/actions';
 import { LoggerService } from 'services/LoggerService';
-import { UserService } from 'services/UserService';
+import UserServiceInstance from 'services/UserService';
 import { Action } from '../app/types';
 import { RootState } from '../rootReducer';
 import { User } from './types';
@@ -18,7 +18,7 @@ const fetchUserEpic: Epic<Action, Action, RootState> = (
         // result comes with recent state [action, state]
         switchMap(([action]: [Action, RootState]) => {
             const userId = action.payload;
-            return UserService.fetchUser(userId);
+            return UserServiceInstance.fetchUser(userId);
         }),
         map((user: User) => fetchUserSuccess(user)),
         catchError((error) => {

@@ -1,14 +1,13 @@
-import { of, Observable } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { User } from 'store/user/types';
+import ConnectionFactory from 'services/connections/ConnectionFactory';
+import { RequestMethod } from 'services/connections/ConnectionBase';
+import { IConnection } from 'services/connections/ConnectionInterface';
 
-export class UserService {
-    static fetchUser(userId: string): Observable<User> {
-        const mockUser = {
-            id: userId,
-            name: 'Bugra',
-            email: 'myemail@gmail.com',
-        } as User;
-        return of(mockUser).pipe(delay(1000));
+class UserService {
+    private connection: IConnection = ConnectionFactory.create();
+    fetchUser(userId: string): Promise<User> {
+        return this.connection.request('user', RequestMethod.GET, { userId });
     }
 }
+
+export default new UserService();

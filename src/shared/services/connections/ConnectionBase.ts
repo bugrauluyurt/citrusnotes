@@ -74,7 +74,7 @@ export class BaseConnection implements IConnection {
         method: RequestMethod,
         params?: any,
         body?: any,
-        requestConfig?: AxiosRequestConfig
+        requestConfig?: AxiosRequestConfig | object
     ): Promise<any> {
         const config = {
             url,

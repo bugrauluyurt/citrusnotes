@@ -3,7 +3,7 @@ import { BaseConnection } from './ConnectionBase';
 import { ConnectionTypes } from './ConnectionTypes';
 
 class ConnectionFactory {
-    create(connectionType: ConnectionTypes): IConnection {
+    create(connectionType: ConnectionTypes = ConnectionTypes.BASE_CONNECTION): IConnection {
         switch (connectionType) {
             case ConnectionTypes.BASE_CONNECTION:
                 return new BaseConnection();
@@ -12,5 +12,4 @@ class ConnectionFactory {
         return new BaseConnection();
     }
 }
-const connectionFactory = new ConnectionFactory();
-export default connectionFactory;
+export default new ConnectionFactory();
