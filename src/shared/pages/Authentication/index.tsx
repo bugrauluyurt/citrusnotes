@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import styles from './Authentication.module.scss';
+import styles from './Authentication.module.css';
 
-const Authentication = () => {
+const Authentication: React.FC<any> = () => {
     const { t } = useTranslation();
     const formik = useFormik({
         initialValues: {
@@ -29,12 +29,7 @@ const Authentication = () => {
     return (
         <React.Fragment>
             <div className="authentication-component">
-                <div
-                    className={classNames(
-                        styles.authenticationComponentInner,
-                        'flex justify-center items-center'
-                    )}
-                >
+                <div className={styles.authenticationComponentInner}>
                     <div className={styles.authenticationBox}>
                         <div className="w-full">
                             <form
@@ -49,7 +44,13 @@ const Authentication = () => {
                                         Username
                                     </label>
                                     <input
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        className={classNames(
+                                            'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                                            {
+                                                'border-red-500':
+                                                    formik.touched.email && formik.errors.email,
+                                            }
+                                        )}
                                         id="email"
                                         type="text"
                                         placeholder={t('username')}
