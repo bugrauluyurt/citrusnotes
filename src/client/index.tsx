@@ -46,7 +46,7 @@ generateI18next(__BROWSER__).then(() => {
                 }
             };
             // @ts-ignore
-            module.hot.accept('../shared/App', () => {
+            module.hot.accept('../shared/Root', () => {
                 setTimeout(render);
             });
             // @ts-ignore
