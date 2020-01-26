@@ -58,7 +58,8 @@
     "redux-observable": "^1.1.0",
     "reselect": "^4.0.0",
     "serve-static": "^1.13.2",
-    "tailwindcss": "^1.1.4"
+    "tailwindcss": "^1.1.4",
+    "yup": "^0.28.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
