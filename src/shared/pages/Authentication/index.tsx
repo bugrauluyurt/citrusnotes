@@ -1,8 +1,31 @@
 import React from 'react';
 import classNames from 'classnames';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import styles from './Authentication.module.scss';
 
 const Authentication = () => {
+    const { t } = useTranslation();
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .email(t('invalid_email'))
+                .required(t('required')),
+            password: Yup.string()
+                .min(6, t('min_password'))
+                .max(30, t('max_password'))
+                .required(t('required')),
+        }),
+        onSubmit: (values) => {
+            console.log('Form value: ', values);
+        },
+    });
+
     return (
         <React.Fragment>
             <div className="authentication-component">
@@ -12,9 +35,12 @@ const Authentication = () => {
                         'flex justify-center items-center'
                     )}
                 >
-                    <div className="authentication-box">
-                        <div className="w-full max-w-xs">
-                            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <div className={styles.authenticationBox}>
+                        <div className="w-full">
+                            <form
+                                className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                                onSubmit={formik.handleSubmit}
+                            >
                                 <div className="mb-4">
                                     <label
                                         className="block text-gray-700 text-sm font-bold mb-2"
@@ -24,10 +50,18 @@ const Authentication = () => {
                                     </label>
                                     <input
                                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="username"
+                                        id="email"
                                         type="text"
-                                        placeholder="Username"
+                                        placeholder={t('username')}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.email}
                                     />
+                                    {formik.touched.email && formik.errors.email ? (
+                                        <p className="text-red-500 text-xs pt-1">
+                                            {formik.errors.email}
+                                        </p>
+                                    ) : null}
                                 </div>
                                 <div className="mb-6">
                                     <label
@@ -37,19 +71,31 @@ const Authentication = () => {
                                         Password
                                     </label>
                                     <input
-                                        className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                        className={classNames(
+                                            'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                                            {
+                                                'border-red-500':
+                                                    formik.touched.password &&
+                                                    formik.errors.password,
+                                            }
+                                        )}
                                         id="password"
                                         type="password"
                                         placeholder="******************"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.password}
                                     />
-                                    <p className="text-red-500 text-xs italic">
-                                        Please choose a Please choose a password.
-                                    </p>
+                                    {formik.touched.password && formik.errors.password ? (
+                                        <p className="text-red-500 text-xs pt-1">
+                                            {formik.errors.password}
+                                        </p>
+                                    ) : null}
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <button
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                        type="button"
+                                        type="submit"
                                     >
                                         Sign In
                                     </button>
@@ -68,7 +114,6 @@ const Authentication = () => {
                     </div>
                 </div>
             </div>
-            {/*<h1 onClick={handleClick}>Authentication component</h1>*/}
         </React.Fragment>
     );
 };

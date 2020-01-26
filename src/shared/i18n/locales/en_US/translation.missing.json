@@ -1,5 +1,12 @@
 {
   "features": "Features",
   "i18n-example": "i18n Example",
-  "i18n-support": "i18n support (via React i18Next)"
+  "i18n-support": "i18n support (via React i18Next)",
+  "invalid_email": "Invalid email address",
+  "invalid_username": "Invalid username",
+  "max_username": "Username should be maximum 20 characters",
+  "max_password": "Maximum password length should be 20 characters",
+  "min_password": "Mininum password length should be 6 characters",
+  "username": "Username",
+  "required": "Required"
 }

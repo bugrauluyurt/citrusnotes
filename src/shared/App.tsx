@@ -27,7 +27,7 @@ const App: React.FC<any> = () => {
         <div id="cr-app">
             <Helmet
                 defaultTitle="CitrusNotes - Time tracking with simple notes"
-                titleTemplate="%s – Time tracking with simple notess"
+                titleTemplate="%s – Time tracking with simple notes"
                 link={[{ rel: 'icon', type: 'image/png', href: favicon }]}
             />
             {/*<p>*/}
