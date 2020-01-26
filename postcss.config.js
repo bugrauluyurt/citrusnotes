@@ -5,6 +5,7 @@ module.exports = {
         require('postcss-import')({
             path: [paths.srcShared, `${__dirname}/node_modules`],
         }),
+        require('tailwindcss'),
         require('postcss-nested')(),
         require('postcss-flexbugs-fixes')(),
         require('autoprefixer')(),
