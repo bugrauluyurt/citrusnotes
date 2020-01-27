@@ -24,7 +24,7 @@ const App: React.FC<any> = () => {
     // );
 
     return (
-        <div id="cr-app">
+        <div id="cr-app" className="light-theme">
             <Helmet
                 defaultTitle="CitrusNotes - Time tracking with simple notes"
                 titleTemplate="%s – Time tracking with simple notes"

@@ -1,1 +1,14 @@
 @import '../../../node_modules/tailwindcss/tailwind.css';
+@import './button.css';
+
+html {
+    font-size: 14px;
+}
+/* Default colors */
+:root {
+    --color-primary-1: #fd636b;
+    --color-primary-2: #ffb902;
+    --color-primary-3: #484a6f;
+    --color-primary-4: #6967ce;
+    --color-primary-5: #19afd0;
+}

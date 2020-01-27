@@ -57,7 +57,7 @@ export const Register = () => {
                         {...formik.getFieldProps('username')}
                     />
                     {formik.touched.username && formik.errors.username ? (
-                        <p className="text-red-500 text-xs pt-1">{formik.errors.username}</p>
+                        <p className="text-red-500 text-sm pt-1">{formik.errors.username}</p>
                     ) : null}
                 </div>
                 {/* Email Field */}
@@ -73,7 +73,7 @@ export const Register = () => {
                         {...formik.getFieldProps('email')}
                     />
                     {formik.touched.email && formik.errors.email ? (
-                        <p className="text-red-500 text-xs pt-1">{formik.errors.email}</p>
+                        <p className="text-red-500 text-sm pt-1">{formik.errors.email}</p>
                     ) : null}
                 </div>
                 {/* Password Field */}
@@ -92,15 +92,12 @@ export const Register = () => {
                         {...formik.getFieldProps('password')}
                     />
                     {formik.touched.password && formik.errors.password ? (
-                        <p className="text-red-500 text-xs pt-1">{formik.errors.password}</p>
+                        <p className="text-red-500 text-sm pt-1">{formik.errors.password}</p>
                     ) : null}
                 </div>
                 {/* Footer */}
                 <div className="flex items-center justify-between">
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="submit"
-                    >
+                    <button className="btn btn-primary-4 ripple" type="submit">
                         {t('register')}
                     </button>
                     <a
