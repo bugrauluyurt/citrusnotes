@@ -1,8 +1,7 @@
-import { createReducer } from 'store/reducerFactory';
-
+import produce from 'immer';
 import { Action } from 'store/app/types';
 import { UserActions } from './actions';
-import { User, UserState } from './types';
+import { UserState } from './types';
 
 export const initialState = Object.freeze<UserState>({
     data: null,
@@ -11,34 +10,51 @@ export const initialState = Object.freeze<UserState>({
     error: null,
 });
 
-const userReducer = createReducer(
-    {
-        [UserActions.FETCH_USER]: (state: UserState): UserState => {
-            return { ...state, loading: true, error: null };
-        },
-        [UserActions.FETCH_USER_SUCCESS]: (state: UserState, action: Action): UserState => {
-            return { ...state, loading: false, error: null, data: action.payload as User };
-        },
-        [UserActions.FETCH_USER_ERROR]: (state: UserState, action: Action): UserState => {
-            return { ...state, loading: false, data: null, error: action.payload };
-        },
-        [UserActions.LOGIN_USER]: (state: UserState): UserState => {
-            return { ...state, loading: true, error: null };
-        },
-        [UserActions.REGISTER_USER]: (state: UserState): UserState => {
-            return { ...state, loading: true, error: null };
-        },
-        [UserActions.USER_AUTHENTICATION_SUCCESS]: (
-            state: UserState,
-            action: Action
-        ): UserState => {
-            return { ...state, loading: false, error: null, data: action.payload as User };
-        },
-        [UserActions.USER_AUTHENTICATION_ERROR]: (state: UserState, action: Action): UserState => {
-            return { ...state, loading: false, error: action.payload, data: null };
-        },
-    },
-    initialState
-);
-
-export default userReducer;
+export default (state: UserState = initialState, action: Action): UserState =>
+    produce(state, (draft) => {
+        switch (action.type) {
+            case UserActions.FETCH_USER: {
+                draft.loading = true;
+                draft.error = null;
+                return;
+            }
+            case UserActions.FETCH_USER_SUCCESS: {
+                draft.loading = false;
+                draft.error = null;
+                draft.data = action.payload;
+                return;
+            }
+            case UserActions.FETCH_USER_ERROR: {
+                draft.loading = false;
+                draft.error = action.payload;
+                draft.data = null;
+                return;
+            }
+            case UserActions.LOGIN_USER: {
+                draft.loading = true;
+                draft.error = null;
+                return;
+            }
+            case UserActions.REGISTER_USER: {
+                draft.loading = true;
+                draft.error = null;
+                return;
+            }
+            case UserActions.USER_AUTHENTICATION_SUCCESS: {
+                draft.loading = false;
+                draft.error = null;
+                draft.data = action.payload;
+                return;
+            }
+            case UserActions.USER_AUTHENTICATION_ERROR: {
+                draft.loading = false;
+                draft.error = action.payload;
+                draft.data = null;
+                return;
+            }
+            case UserActions.DISABLE_ERROR: {
+                draft.error = null;
+                return;
+            }
+        }
+    });

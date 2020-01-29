@@ -5,16 +5,20 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputStyle } from 'styles/input';
-import { ROUTE_LOGIN } from 'pages/Authentication/routes';
+import { ROUTE_REGISTER } from 'pages/Authentication/routes';
 import { isUserLoading } from 'store/user/selectors';
-import { userRegister } from 'store/user/actions';
+import { userErrorDisable, userRegister } from 'store/user/actions';
 import { RegisterParams } from 'store/user/types';
 
-export const Register = () => {
+export const Register: React.FC<any> = () => {
     const { t } = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
     const loading = useSelector(isUserLoading);
+    const onClickLogin = () => {
+        dispatch(userErrorDisable());
+        history.push(`${ROUTE_REGISTER}`);
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -108,7 +112,7 @@ export const Register = () => {
                     </button>
                     <a
                         className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer underline"
-                        onClick={() => history.push(`${ROUTE_LOGIN}`)}
+                        onClick={onClickLogin}
                     >
                         <span className="pr-1">{t('login')}</span>
                     </a>

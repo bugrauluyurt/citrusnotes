@@ -9,6 +9,7 @@ export enum UserActions {
     REGISTER_USER = 'USER::REGISTER_USER',
     USER_AUTHENTICATION_SUCCESS = 'USER::USER_AUTHENTICATION_SUCCESS',
     USER_AUTHENTICATION_ERROR = 'USER::USER_AUTHENTICATION_ERROR',
+    DISABLE_ERROR = 'USER::USER_DISABLE_ERROR',
 }
 
 // Fetch User
@@ -42,4 +43,9 @@ export const userAuthenticationSuccess = (user: User): Action => {
 // Authentication - Error
 export const userAuthenticationError = (error: any): Action => {
     return { type: UserActions.USER_AUTHENTICATION_ERROR, payload: error };
+};
+
+// Disable error
+export const userErrorDisable = (): Action => {
+    return { type: UserActions.DISABLE_ERROR };
 };

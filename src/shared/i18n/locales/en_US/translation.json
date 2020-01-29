@@ -15,5 +15,6 @@
   "register": "Register",
   "login": "Login",
   "password": "Password",
-  "loading": "Loading"
+  "loading": "Loading",
+  "error": "Error"
 }

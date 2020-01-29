@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputStyle } from 'styles/input';
 import { ROUTE_REGISTER } from 'pages/Authentication/routes';
-import { userLogin } from 'store/user/actions';
+import { userErrorDisable, userLogin } from 'store/user/actions';
 import { isUserLoading } from 'store/user/selectors';
 import { LoginParams } from 'store/user/types';
 
@@ -15,6 +15,10 @@ export const Login: React.FC<any> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const loading = useSelector(isUserLoading);
+    const onClickRegister = () => {
+        dispatch(userErrorDisable());
+        history.push(`${ROUTE_REGISTER}`);
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -84,7 +88,7 @@ export const Login: React.FC<any> = () => {
                     </button>
                     <a
                         className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer underline"
-                        onClick={() => history.push(`${ROUTE_REGISTER}`)}
+                        onClick={onClickRegister}
                     >
                         <span className="pr-1">{t('register')}</span>
                     </a>
