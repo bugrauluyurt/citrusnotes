@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputStyle } from 'styles/input';
-import { ROUTE_REGISTER } from 'pages/Authentication/routes';
+import { ROUTE_LOGIN } from 'pages/Authentication/routes';
 import { isUserLoading } from 'store/user/selectors';
 import { userErrorDisable, userRegister } from 'store/user/actions';
 import { RegisterParams } from 'store/user/types';
@@ -17,7 +17,7 @@ export const Register: React.FC<any> = () => {
     const loading = useSelector(isUserLoading);
     const onClickLogin = () => {
         dispatch(userErrorDisable());
-        history.push(`${ROUTE_REGISTER}`);
+        history.push(`${ROUTE_LOGIN}`);
     };
 
     const formik = useFormik({
