@@ -6,7 +6,7 @@ import { IConnection } from 'services/connections/ConnectionInterface';
 const axios = require('axios');
 
 const AXIOS_BASE_CONFIG = {
-    baseUrl: process.env.API_URL || '/',
+    baseURL: process.env.API_URL || '/api',
     headers: {
         'Cache-Control': 'no-store',
         'Pragma': 'no-cache',
@@ -89,6 +89,15 @@ export class BaseConnection implements IConnection {
             }
             config.data = !isFormData && _isObject(body) ? JSON.stringify(body) : body || '';
         }
-        return this.connectionInstance.request(config);
+        return new Promise<any>((resolve) => {
+            this.connectionInstance
+                .request(config)
+                .then((response) => resolve(response))
+                .catch((error) => {
+                    const errorObj = new Error(error);
+                    LoggerService.log(errorObj, 'error');
+                    resolve(errorObj);
+                });
+        });
     }
 }

@@ -3,12 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import { InputStyle } from 'styles/input';
 import { ROUTE_REGISTER } from 'pages/Authentication/routes';
+import { userLogin } from 'store/user/actions';
+import { isUserLoading } from 'store/user/selectors';
+import { LoginParams } from 'store/user/types';
 
 export const Login: React.FC<any> = () => {
     const { t } = useTranslation();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const loading = useSelector(isUserLoading);
 
     const formik = useFormik({
         initialValues: {
@@ -24,8 +30,8 @@ export const Login: React.FC<any> = () => {
                 .max(30, t('max_password'))
                 .required(t('required')),
         }),
-        onSubmit: (values) => {
-            console.log('Form value: ', values);
+        onSubmit: (values: LoginParams) => {
+            dispatch(userLogin(values));
         },
     });
 
@@ -73,8 +79,8 @@ export const Login: React.FC<any> = () => {
                 </div>
                 {/* Footer */}
                 <div className="flex items-center justify-between">
-                    <button className="btn btn-primary-4 ripple" type="submit">
-                        {t('sign_in')}
+                    <button className="btn btn-primary-4 ripple" type="submit" disabled={loading}>
+                        {loading ? t('loading') + '...' : t('login')}
                     </button>
                     <a
                         className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer underline"

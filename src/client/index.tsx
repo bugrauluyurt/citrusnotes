@@ -17,7 +17,7 @@ const rootAppElement = document.getElementById('app');
 const epicMiddleware = createEpicMiddleware<Action, Action, RootState>();
 const history = createHistory();
 const store = configureStore({
-    initialState: window.__PRELOADED_STATE__,
+    initialState: window.__PRELOADED_STATE__ || {},
     middleware: [routerMiddleware(history), epicMiddleware],
     history,
 });

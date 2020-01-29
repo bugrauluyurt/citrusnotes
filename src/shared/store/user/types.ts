@@ -8,4 +8,16 @@ export type UserState = Readonly<{
     data: User | null;
     isAnonymous: boolean;
     loading: boolean;
+    error: any;
 }>;
+
+// Api params
+export interface LoginParams {
+    email: string;
+    password: string;
+}
+export interface RegisterParams {
+    username: string;
+    email: string;
+    password: string;
+}

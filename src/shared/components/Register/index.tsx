@@ -3,12 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
 import { InputStyle } from 'styles/input';
 import { ROUTE_LOGIN } from 'pages/Authentication/routes';
+import { isUserLoading } from 'store/user/selectors';
+import { userRegister } from 'store/user/actions';
+import { RegisterParams } from 'store/user/types';
 
 export const Register = () => {
     const { t } = useTranslation();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const loading = useSelector(isUserLoading);
 
     const formik = useFormik({
         initialValues: {
@@ -29,8 +35,8 @@ export const Register = () => {
                 .max(30, t('max_password'))
                 .required(t('required')),
         }),
-        onSubmit: (values) => {
-            console.log('Form value: ', values);
+        onSubmit: (values: RegisterParams) => {
+            dispatch(userRegister(values));
         },
     });
 
@@ -98,13 +104,13 @@ export const Register = () => {
                 {/* Footer */}
                 <div className="flex items-center justify-between">
                     <button className="btn btn-primary-4 ripple" type="submit">
-                        {t('register')}
+                        {loading ? t('loading') + '...' : t('register')}
                     </button>
                     <a
                         className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer underline"
                         onClick={() => history.push(`${ROUTE_LOGIN}`)}
                     >
-                        <span className="pr-1">{t('sign_in')}</span>
+                        <span className="pr-1">{t('login')}</span>
                     </a>
                 </div>
             </form>
