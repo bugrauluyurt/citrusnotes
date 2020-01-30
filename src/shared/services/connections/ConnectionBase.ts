@@ -94,8 +94,7 @@ export class BaseConnection implements IConnection {
                 .request(config)
                 .then((response) => resolve(response))
                 .catch((error) => {
-                    const errorObj = new Error(error);
-                    LoggerService.log(errorObj, 'error');
+                    const errorObj = error instanceof Error ? error : new Error(error);
                     resolve(errorObj);
                 });
         });

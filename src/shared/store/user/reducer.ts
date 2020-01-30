@@ -5,7 +5,6 @@ import { UserState } from './types';
 
 export const initialState = Object.freeze<UserState>({
     data: null,
-    isAnonymous: true,
     loading: false,
     error: null,
 });
