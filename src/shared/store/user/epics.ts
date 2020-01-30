@@ -9,6 +9,7 @@ import {
     userAuthenticationSuccess,
 } from 'store/user/actions';
 import UserServiceInstance from 'services/UserService';
+import { epicResponseHandler } from 'store/epicResponseHandler';
 import { Action } from '../app/types';
 import { RootState } from '../rootReducer';
 import { User } from './types';
@@ -25,11 +26,9 @@ const fetchUserEpic: Epic<Action, Action, RootState> = (
             const userId = action.payload;
             return UserServiceInstance.fetchUser(userId);
         }),
-        map((response: User | Error) => {
-            return response instanceof Error
-                ? fetchUserError(response.message)
-                : fetchUserSuccess(response);
-        })
+        map((response: User | Error) =>
+            epicResponseHandler(response, [fetchUserSuccess, fetchUserError])
+        )
     );
 
 const authenticateUserEpic: Epic<Action, Action, RootState> = (
@@ -46,11 +45,9 @@ const authenticateUserEpic: Epic<Action, Action, RootState> = (
                 ? UserServiceInstance.registerUser(params)
                 : UserServiceInstance.loginUser(params);
         }),
-        map((response: User | Error) => {
-            return response instanceof Error
-                ? userAuthenticationError(response.message)
-                : userAuthenticationSuccess(response);
-        })
+        map((response: User | Error) =>
+            epicResponseHandler(response, [userAuthenticationSuccess, userAuthenticationError])
+        )
     );
 
 export default [fetchUserEpic, authenticateUserEpic];
