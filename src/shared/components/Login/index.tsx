@@ -30,7 +30,7 @@ export const Login: React.FC<any> = () => {
                 .email(t('invalid_email'))
                 .required(t('required')),
             password: Yup.string()
-                .min(6, t('min_password'))
+                .min(5, t('min_password'))
                 .max(30, t('max_password'))
                 .required(t('required')),
         }),

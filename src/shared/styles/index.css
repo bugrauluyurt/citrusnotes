@@ -4,6 +4,9 @@
 html {
     font-size: 14px;
 }
+#cr-app {
+    background-color: #fdfdfd;
+}
 /* Default colors */
 :root {
     --color-primary-1: #fd636b;

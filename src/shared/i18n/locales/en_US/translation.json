@@ -7,7 +7,7 @@
   "max_username": "Username should be maximum 100 characters",
   "min_username": "Username should be minimum 3 characters",
   "max_password": "Maximum password length should be 20 characters",
-  "min_password": "Mininum password length should be 6 characters",
+  "min_password": "Mininum password length should be 5 characters",
   "name": "Name",
   "email": "Email",
   "username": "Username",

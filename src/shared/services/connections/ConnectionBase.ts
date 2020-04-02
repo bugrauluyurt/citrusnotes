@@ -6,7 +6,7 @@ import { IConnection } from 'services/connections/ConnectionInterface';
 const axios = require('axios');
 
 const AXIOS_BASE_CONFIG = {
-    baseURL: process.env.API_URL || '/api',
+    baseURL: process.env.API_URL || '/rest',
     headers: {
         'Cache-Control': 'no-store',
         'Pragma': 'no-cache',
@@ -26,6 +26,7 @@ export enum RequestMethod {
 export class BaseConnection implements IConnection {
     private authorization: string | undefined;
     private connectionInstance: AxiosInstance;
+    private defaultRequestConfig: AxiosRequestConfig = {};
 
     constructor(baseUrl?: string, authorization?: string, requestConfig?: AxiosRequestConfig) {
         const config = {
@@ -39,6 +40,7 @@ export class BaseConnection implements IConnection {
         if (this.authorization) {
             config.headers.Authorization = this.authorization;
         }
+        this.defaultRequestConfig = config;
         this.connectionInstance = axios.create(config);
         this.setInterceptors();
     }
@@ -80,6 +82,7 @@ export class BaseConnection implements IConnection {
             url,
             method,
             params: this.sanitizeParams(params),
+            ...this.defaultRequestConfig,
             ...requestConfig,
         } as AxiosRequestConfig;
         if (body) {

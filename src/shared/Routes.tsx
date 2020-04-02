@@ -38,13 +38,15 @@ const Routes: React.FC<any> = () => {
         <Switch>
             {/* Public Routes */}
             <Route exact path="/">
-                <Redirect to="/browse" />
+                <Redirect to="/authentication" />
             </Route>
-            <Route path="/browse" component={Browse} />
             <Route path="/authentication" component={Authentication} />
             {/* Protected Routes */}
             <PrivateRoute path="/settings">
                 <Settings />
+            </PrivateRoute>
+            <PrivateRoute path="/browse">
+                <Browse />
             </PrivateRoute>
         </Switch>
     );
