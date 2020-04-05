@@ -6,12 +6,20 @@ import { IConnection } from 'services/connections/ConnectionInterface';
 class UserService {
     private connection: IConnection = ConnectionFactory.create();
 
-    fetchUser(userId: string): Promise<User> {
-        return this.connection.request('user', RequestMethod.GET, { userId });
+    getUser(): Promise<User> {
+        return this.connection.request('users/currentUser', RequestMethod.GET);
+    }
+
+    getUserById(userId: string): Promise<User> {
+        return this.connection.request(`users/${userId}`, RequestMethod.GET);
     }
 
     loginUser(params: LoginParams): Promise<User> {
         return this.connection.request('auth/local/login', RequestMethod.POST, undefined, params);
+    }
+
+    logoutUser(): Promise<void> {
+        return this.connection.request('auth/local/logout', RequestMethod.POST);
     }
 
     registerUser(params: RegisterParams): Promise<User> {

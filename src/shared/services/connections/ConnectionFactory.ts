@@ -6,7 +6,7 @@ class ConnectionFactory {
     create(connectionType: ConnectionTypes = ConnectionTypes.BASE_CONNECTION): IConnection {
         switch (connectionType) {
             case ConnectionTypes.BASE_CONNECTION:
-                return new BaseConnection();
+                return new BaseConnection(process.env.API_URL);
             // Other connection cases can be written here
         }
         return new BaseConnection();

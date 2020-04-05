@@ -24,7 +24,7 @@ const fetchUserEpic: Epic<Action, Action, RootState> = (
         // result comes with recent state [action, state]
         switchMap(([action]: [Action, RootState]) => {
             const userId = action.payload;
-            return UserServiceInstance.fetchUser(userId);
+            return UserServiceInstance.getUserById(userId);
         }),
         map((response: User | Error) =>
             epicResponseHandler(response, [fetchUserSuccess, fetchUserError])

@@ -1,7 +1,19 @@
+export enum UserRole {
+    ADMIN = 'admin',
+    BASIC = 'basic',
+    SERVER = 'server',
+    PROJECT_ADMIN = 'projectAdmin',
+    PROJECT_MANAGER = 'projectManager',
+}
+
 export interface User {
-    id: string;
+    _id: string;
+    companies: string[];
+    roles: UserRole[];
     name: string;
     email: string;
+    phone: string;
+    address: string;
 }
 
 export type UserState = Readonly<{
@@ -15,6 +27,7 @@ export interface LoginParams {
     email: string;
     password: string;
 }
+
 export interface RegisterParams {
     username: string;
     email: string;

@@ -40,6 +40,7 @@ module.exports = () => {
         PORT: process.env.PORT || 8500,
         NODE_ENV: process.env.NODE_ENV || 'development',
         HOST: process.env.HOST || 'http://localhost',
+        API_URL: process.env.API_URL || 'https://api.citrusnotes.com/rest',
     };
 
     // Stringify all values so we can feed into Webpack DefinePlugin
