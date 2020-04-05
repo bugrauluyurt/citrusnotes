@@ -15,6 +15,7 @@ import { i18nextXhr, refreshTranslations } from './middleware/i18n';
 require('dotenv').config();
 
 const app = express.default();
+const cookieParser = require('cookie-parser');
 
 // Use Nginx or Apache to serve static assets in production or remove the if() around the following
 // lines to use the express.static middleware to serve assets for production (not recommended!)
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
     app.use(paths.publicPath, express.static(path.join(paths.clientBuild, paths.publicPath)));
 }
 
+app.use(cookieParser());
 app.use(cors());
 
 app.use(bodyParser.json());

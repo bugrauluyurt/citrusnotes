@@ -3,7 +3,7 @@ import ReactDOM, { hydrate } from 'react-dom';
 import { createEpicMiddleware } from 'redux-observable';
 import { loadableReady } from '@loadable/component';
 import { routerMiddleware } from 'connected-react-router';
-import { Store } from 'redux';
+import _get from 'lodash/get';
 import { Action } from 'store/app/types';
 import { RootState } from 'store/rootReducer';
 import rootEpic from 'store/rootEpic';
@@ -28,14 +28,14 @@ const store = configureStore({
 generateI18next(__BROWSER__)
     .then(() => UserServiceInstance.getUser().catch(() => undefined))
     .then((sessionUser: User | undefined) => {
-        let render = async (presetStore?: Store) => {
+        if (sessionUser) {
+            store.dispatch(fetchUserSuccess(_get(sessionUser, 'data')));
+        }
+
+        let render = async () => {
             await loadableReady(() => {
                 epicMiddleware.run(rootEpic);
-                const generatedStore = presetStore || store;
-                if (sessionUser) {
-                    generatedStore.dispatch(fetchUserSuccess(sessionUser));
-                }
-                hydrate(<Root store={generatedStore} history={history} />, rootAppElement);
+                hydrate(<Root store={store} history={history} />, rootAppElement);
             });
         };
 
@@ -49,7 +49,7 @@ generateI18next(__BROWSER__)
                 };
                 render = async () => {
                     try {
-                        await renderApp(store);
+                        await renderApp();
                     } catch (error) {
                         renderError(error);
                     }

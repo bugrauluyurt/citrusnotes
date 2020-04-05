@@ -9,4 +9,6 @@ export declare interface IConnection {
         body?: any,
         requestConfig?: AxiosRequestConfig
     ): Promise<any>;
+
+    getRequestConfig(): AxiosRequestConfig;
 }

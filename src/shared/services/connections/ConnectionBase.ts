@@ -45,6 +45,10 @@ export class BaseConnection implements IConnection {
         this.setInterceptors();
     }
 
+    getRequestConfig(): AxiosRequestConfig {
+        return this.defaultRequestConfig;
+    }
+
     private setInterceptors(): void {
         this.connectionInstance.interceptors.response.use(
             (response) => {

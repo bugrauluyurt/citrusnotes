@@ -12,19 +12,20 @@ export const Authentication = loadable(() => import('./pages/Authentication'), l
 export const Browse = loadable(() => import('./pages/Browse'), lazyRouteOptions);
 export const Settings = loadable(() => import('./pages/Settings'), lazyRouteOptions);
 
-const PrivateRoute: React.FC<any> = ({ children, ...rest }) => {
+const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
     const isAnonymous = useSelector(isUserAnonymous);
+    console.log('isAnonymous ->', isAnonymous);
     return (
         <Route
             {...rest}
-            render={({ location }: any) =>
+            render={(props: any) =>
                 !isAnonymous ? (
-                    children
+                    <Component {...props} />
                 ) : (
                     <Redirect
                         to={{
                             pathname: '/authentication',
-                            state: { from: location },
+                            state: { from: props.location },
                         }}
                     />
                 )
@@ -41,13 +42,9 @@ const Routes: React.FC<any> = () => {
                 <Redirect to="/authentication" />
             </Route>
             <Route path="/authentication" component={Authentication} />
-            {/* Protected Routes */}
-            <PrivateRoute path="/settings">
-                <Settings />
-            </PrivateRoute>
-            <PrivateRoute path="/browse">
-                <Browse />
-            </PrivateRoute>
+            {/* Private Routes */}
+            <PrivateRoute path="/settings" component={Settings} />
+            <PrivateRoute path="/browse" component={Browse} />
         </Switch>
     );
 };

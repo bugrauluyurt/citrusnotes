@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import { LoginParams, RegisterParams, User } from 'store/user/types';
 import ConnectionFactory from 'services/connections/ConnectionFactory';
 import { RequestMethod } from 'services/connections/ConnectionBase';
@@ -6,8 +7,18 @@ import { IConnection } from 'services/connections/ConnectionInterface';
 class UserService {
     private connection: IConnection = ConnectionFactory.create();
 
-    getUser(): Promise<User> {
-        return this.connection.request('users/currentUser', RequestMethod.GET);
+    getRequestConfig(): AxiosRequestConfig {
+        return this.connection.getRequestConfig();
+    }
+
+    getUser(requestConfig?: AxiosRequestConfig | object): Promise<User> {
+        return this.connection.request(
+            'users/currentUser',
+            RequestMethod.GET,
+            undefined,
+            undefined,
+            requestConfig
+        );
     }
 
     getUserById(userId: string): Promise<User> {

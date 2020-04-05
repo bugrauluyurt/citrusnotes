@@ -26,9 +26,9 @@ const fetchUserEpic: Epic<Action, Action, RootState> = (
             const userId = action.payload;
             return UserServiceInstance.getUserById(userId);
         }),
-        map((response: User | Error) =>
-            epicResponseHandler(response, [fetchUserSuccess, fetchUserError])
-        )
+        map((response: User | Error) => {
+            return epicResponseHandler(response, [fetchUserSuccess, fetchUserError]);
+        })
     );
 
 const authenticateUserEpic: Epic<Action, Action, RootState> = (
