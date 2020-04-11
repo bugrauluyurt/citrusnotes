@@ -1,10 +1,10 @@
-import React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import loadable from '@loadable/component';
 import pMinDelay from 'p-min-delay';
-import { isUserAnonymous } from 'store/user/selectors';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import LazyLoadingSpinner from 'components/LazyLoadingSpinner';
+import { isUserAnonymous } from 'store/user/selectors';
 
 const lazyRouteDelay = 2000;
 const lazyRouteOptions = { fallback: <LazyLoadingSpinner /> };
@@ -14,8 +14,8 @@ export const Authentication = loadable(
     () => pMinDelay(import('./pages/Authentication'), lazyRouteDelay),
     lazyRouteOptions
 );
-export const Browse = loadable(
-    () => pMinDelay(import('./pages/Browse'), lazyRouteDelay),
+export const Home = loadable(
+    () => pMinDelay(import('./pages/Home'), lazyRouteDelay),
     lazyRouteOptions
 );
 export const Settings = loadable(
@@ -49,12 +49,12 @@ const Routes: React.FC<any> = () => {
         <Switch>
             {/* Public Routes */}
             <Route exact path="/">
-                <Redirect to="/authentication" />
+                <Redirect to="/home" />
             </Route>
             <Route path="/authentication" component={Authentication} />
             {/* Private Routes */}
             <PrivateRoute path="/settings" component={Settings} />
-            <PrivateRoute path="/browse" component={Browse} />
+            <PrivateRoute path="/home" component={Home} />
         </Switch>
     );
 };

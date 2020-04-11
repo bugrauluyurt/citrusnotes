@@ -1,17 +1,17 @@
 import path from 'path';
-import * as React from 'react';
-import * as express from 'express';
-import { renderToString } from 'react-dom/server';
-import { ChunkExtractor } from '@loadable/server';
-import { Store } from 'redux';
 import _get from 'lodash/get';
-import Root from 'Root';
+import * as express from 'express';
+import { ChunkExtractor } from '@loadable/server';
+import * as React from 'react';
+import { renderToString } from 'react-dom/server';
+import { Store } from 'redux';
 import generateI18next from 'i18n/I18nGenerator';
+import Root from 'Root';
 import UserServiceInstance from 'services/UserService';
-import { User } from 'store/user/types';
 import { fetchUserSuccess } from 'store/user/actions';
-import Html from '../components/HTML';
+import { User } from 'store/user/types';
 import paths from '../../../config/paths';
+import Html from '../components/HTML';
 
 const helmetContext = {};
 // Loadable Stats File

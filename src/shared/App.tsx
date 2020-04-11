@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 // import { useDispatch } from 'react-redux';
 // import { useTranslation } from 'react-i18next';
 // import { Link } from 'react-router-dom';
-// //import { Button } from 'antd';
+// import { Button } from 'antd';
 // import { setLocale } from 'store/app/actions';
 // import { Locale } from 'store/app/types';
 // import Features from 'components/Features';

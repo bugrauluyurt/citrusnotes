@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM, { hydrate } from 'react-dom';
-import { createEpicMiddleware } from 'redux-observable';
 import { loadableReady } from '@loadable/component';
 import { routerMiddleware } from 'connected-react-router';
 import _get from 'lodash/get';
-import { Action } from 'store/app/types';
-import { RootState } from 'store/rootReducer';
-import rootEpic from 'store/rootEpic';
+import React from 'react';
+import ReactDOM, { hydrate } from 'react-dom';
+import { createEpicMiddleware } from 'redux-observable';
 import generateI18next from 'i18n/I18nGenerator';
 import UserServiceInstance from 'services/UserService';
-import { User } from 'store/user/types';
+import { Action } from 'store/app/types';
+import rootEpic from 'store/rootEpic';
+import { RootState } from 'store/rootReducer';
 import { fetchUserSuccess } from 'store/user/actions';
+import { User } from 'store/user/types';
 import Root from '../shared/Root';
 import { configureStore } from '../shared/store';
 import createHistory from '../shared/store/history';
@@ -26,12 +26,22 @@ const store = configureStore({
 });
 
 generateI18next(__BROWSER__)
-    .then(() => UserServiceInstance.getUser().catch(() => undefined))
-    .then((sessionUser: User | undefined) => {
-        if (sessionUser) {
-            store.dispatch(fetchUserSuccess(_get(sessionUser, 'data')));
+    .then(() => {
+        if (window) {
+            const userId = _get(window.__PRELOADED_STATE__, 'user.data.id');
+            if (userId) {
+                return Promise.resolve();
+            }
         }
-
+        return UserServiceInstance.getUser()
+            .then((sessionUser: User | undefined) => {
+                if (sessionUser) {
+                    store.dispatch(fetchUserSuccess(_get(sessionUser, 'data')));
+                }
+            })
+            .catch(() => undefined);
+    })
+    .then(() => {
         let render = async () => {
             await loadableReady(() => {
                 epicMiddleware.run(rootEpic);

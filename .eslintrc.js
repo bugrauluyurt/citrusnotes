@@ -17,10 +17,13 @@ module.exports = {
             version: 'detect',
         },
     },
+    plugins: ['react-hooks'],
     rules: {
         'import/no-unassigned-import': 0,
         'import/no-named-as-default-member': 0,
         'prettier/prettier': 'error',
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
     },
     overrides: [
         {
