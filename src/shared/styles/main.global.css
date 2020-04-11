@@ -5,6 +5,9 @@
 html {
     font-size: 14px;
 }
+body {
+    overflow: hidden;
+}
 #cr-app {
     background-color: #fdfdfd;
 }

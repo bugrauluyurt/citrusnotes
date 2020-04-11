@@ -1,5 +1,33 @@
+$aside-background: #141A26;
+$aside-lg-width: 18rem;
+
 .wrapper {
-    .redColor {
-        color: $color-primary-1;
+    height: 100vh;
+    .asideMenu {
+        background-color: $aside-background;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        transition: 0.3s all ease;
+        left: -100%;
+        top: 0;
+        @include for-tablet-portrait-up {
+            width: $aside-lg-width;
+            left: -$aside-lg-width;
+        }
+    }
+    .homeWrapper {
+        height: 100%;
+        width: 100%;
+        transition: 0.3s all ease;
+    }
+    &.asideOpen {
+        .asideMenu {
+            left: 0;
+        }
+        .homeWrapper {
+            width: calc(100% - $aside-lg-width);
+            margin-left: $aside-lg-width;
+        }
     }
 }
