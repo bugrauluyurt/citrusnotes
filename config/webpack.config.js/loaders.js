@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const generateSourceMap = process.env.OMIT_SOURCEMAP === 'true' ? false : true;
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const paths = require('../paths');
 
 const lessRegex = /\.less$/;
 const cssRegex = /\.css$/;
@@ -145,6 +146,13 @@ const scssModuleLoaderServer = {
                 sourceMap: generateSourceMap,
             },
         },
+        {
+            loader: 'sass-resources-loader',
+            options: {
+                // Provide path to the file with resources
+                resources: paths.scssResources,
+            },
+        },
     ],
 };
 
@@ -167,6 +175,13 @@ const scssModuleLoaderClient = {
             loader: 'sass-loader',
             options: {
                 sourceMap: generateSourceMap,
+            },
+        },
+        {
+            loader: 'sass-resources-loader',
+            options: {
+                // Provide path to the file with resources
+                resources: paths.scssResources,
             },
         },
     ],

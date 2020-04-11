@@ -2,19 +2,29 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import loadable from '@loadable/component';
+import pMinDelay from 'p-min-delay';
 import { isUserAnonymous } from 'store/user/selectors';
+import LazyLoadingSpinner from 'components/LazyLoadingSpinner';
 
-//@TODO: Loading component must be separated from routes
-const lazyRouteOptions = { fallback: <div>Loading...</div> };
+const lazyRouteDelay = 2000;
+const lazyRouteOptions = { fallback: <LazyLoadingSpinner /> };
 
 // Lazy Routes
-export const Authentication = loadable(() => import('./pages/Authentication'), lazyRouteOptions);
-export const Browse = loadable(() => import('./pages/Browse'), lazyRouteOptions);
-export const Settings = loadable(() => import('./pages/Settings'), lazyRouteOptions);
+export const Authentication = loadable(
+    () => pMinDelay(import('./pages/Authentication'), lazyRouteDelay),
+    lazyRouteOptions
+);
+export const Browse = loadable(
+    () => pMinDelay(import('./pages/Browse'), lazyRouteDelay),
+    lazyRouteOptions
+);
+export const Settings = loadable(
+    () => pMinDelay(import('./pages/Settings'), lazyRouteDelay),
+    lazyRouteOptions
+);
 
 const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
     const isAnonymous = useSelector(isUserAnonymous);
-    console.log('isAnonymous ->', isAnonymous);
     return (
         <Route
             {...rest}

@@ -1,0 +1,10 @@
+@import '../../../node_modules/tailwindcss/tailwind.css';
+@import './abstracts/css/variables.css';
+@import './components/buttons.css';
+
+html {
+    font-size: 14px;
+}
+#cr-app {
+    background-color: #fdfdfd;
+}

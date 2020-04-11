@@ -30,7 +30,9 @@ const serverRenderer: any = () => (
     generateI18next(__BROWSER__)
         .then(() => {
             const requestConfig = UserServiceInstance.getRequestConfig();
-            requestConfig.headers.Cookie = headers.cookie;
+            if (headers.cookie) {
+                requestConfig.headers.Cookie = headers.cookie;
+            }
             return UserServiceInstance.getUser(requestConfig).catch(() => undefined);
         })
         .then((sessionUser: User | undefined) => {

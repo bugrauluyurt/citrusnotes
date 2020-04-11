@@ -1,0 +1,47 @@
+.wrapper {
+    background-color: #fdfdfd;
+    height: 100vh;
+    .loading {
+        background: #ffffff;
+        display: inline-block;
+        height: 200px;
+        margin-bottom: 5em;
+        overflow: hidden;
+        transform: scale(0.3);
+        width: 200px;
+    }
+
+    .loading_inner {
+        backface-visibility: hidden;
+        height: 100%;
+        position: relative;
+        transform: translateZ(0) scale(1);
+        transform-origin: 0 0; /* see note above */
+        width: 100%;
+
+        div {
+            animation: loading-eclipse 1s linear infinite;
+            border-radius: 50%;
+            box-shadow: 0 4.4px 0 0 #a0aec0;
+            box-sizing: content-box;
+            height: 160px;
+            left: 20px;
+            position: absolute;
+            top: 20px;
+            transform-origin: 80px 82.2px;
+            width: 160px;
+        }
+    }
+}
+
+@keyframes loading-eclipse {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { InputStyle } from 'styles/input';
+import { InputStyle } from 'styles/components/input';
 import { ROUTE_LOGIN } from 'pages/Authentication/routes';
 import { isUserLoading } from 'store/user/selectors';
 import { userErrorDisable, userRegister } from 'store/user/actions';
