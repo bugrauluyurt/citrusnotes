@@ -1,10 +1,10 @@
-import React from 'react';
 import { ConnectedRouter } from 'connected-react-router';
+import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import App from 'App';
 import IntlProvider from 'i18n/IntlProvider';
+import App from 'App';
 import './styles/main.global.css';
 
 interface Props {

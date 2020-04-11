@@ -17,7 +17,7 @@ module.exports = {
             version: 'detect',
         },
     },
-    plugins: ['react-hooks'],
+    plugins: ['react-hooks', '@typescript-eslint'],
     rules: {
         'import/no-unassigned-import': 0,
         'import/no-named-as-default-member': 0,
@@ -32,6 +32,7 @@ module.exports = {
                 // TODO: add to eslint-config-wiremore
                 'import/named': 0,
                 'react/prop-types': 0,
+                'semi': [2, 'always', { omitLastInOneLineBlock: true }],
             },
         },
     ],
