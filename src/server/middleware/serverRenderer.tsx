@@ -27,7 +27,7 @@ const serverRenderer: any = () => (
     res: express.Response
 ) => {
     const headers = req.headers;
-    generateI18next(__BROWSER__)
+    generateI18next(__SERVER__)
         .then(() => {
             const requestConfig = UserServiceInstance.getRequestConfig();
             if (headers.cookie) {

@@ -1,16 +1,17 @@
 import path from 'path';
-import * as express from 'express';
-import cors from 'cors';
-import chalk from 'chalk';
-import manifestHelpers from 'express-manifest-helpers';
 import bodyParser from 'body-parser';
+import chalk from 'chalk';
+import cors from 'cors';
+import * as express from 'express';
+import manifestHelpers from 'express-manifest-helpers';
+import * as _ from 'lodash';
 import addHistory from 'middleware/addHistory';
 import paths from '../../config/paths';
-import errorHandler from './middleware/errorHandler';
-import serverRenderer from './middleware/serverRenderer';
 import addStore from './middleware/addStore';
-import webhookVerification from './middleware/webhookVerification';
+import errorHandler from './middleware/errorHandler';
 import { i18nextXhr, refreshTranslations } from './middleware/i18n';
+import serverRenderer from './middleware/serverRenderer';
+import webhookVerification from './middleware/webhookVerification';
 
 require('dotenv').config();
 
@@ -37,19 +38,13 @@ app.get('/locales/:locale/:ns.json', i18nextXhr);
 app.use(addHistory);
 app.use(addStore);
 
-let manifestPath = path.join(paths.clientBuild, paths.publicPath);
-if (process.env.NODE_ENV === 'production') {
-    manifestPath = path.join(process.env.CDN_PATH || '', '/manifest.json');
-}
-
 app.use(
     manifestHelpers({
-        manifestPath: `${manifestPath}/manifest.json`,
+        manifestPath: `${path.join(paths.clientBuild, paths.publicPath)}/manifest.json`,
         // Manifest path should prepended with cdn path for production
-        // Enable below line for production after putting related cdn link here
-        // prependPath: '//cdn.example/assets'
+        prependPath: !_.isEmpty(process.env.CDN_PATH) ? process.env.CDN_PATH : '',
         // Cache can be only enabled for production
-        // cache: process.env.NODE_ENV === 'production'
+        cache: process.env.NODE_ENV === 'production',
     })
 );
 
