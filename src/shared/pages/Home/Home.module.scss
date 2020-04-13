@@ -1,4 +1,4 @@
-$aside-background: #141A26;
+$aside-background: #141a26;
 $aside-lg-width: 18rem;
 
 .wrapper {
@@ -12,22 +12,22 @@ $aside-lg-width: 18rem;
         left: -100%;
         top: 0;
         @include for-tablet-portrait-up {
-            width: $aside-lg-width;
             left: -$aside-lg-width;
+            width: $aside-lg-width;
         }
     }
     .homeWrapper {
         height: 100%;
-        width: 100%;
         transition: 0.3s all ease;
+        width: 100%;
     }
     &.asideOpen {
         .asideMenu {
             left: 0;
         }
         .homeWrapper {
-            width: calc(100% - $aside-lg-width);
             margin-left: $aside-lg-width;
+            width: calc(100% - $aside-lg-width);
         }
     }
 }

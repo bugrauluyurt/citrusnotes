@@ -5,7 +5,6 @@ import { ChunkExtractor } from '@loadable/server';
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Store } from 'redux';
-import generateI18next from 'i18n/I18nGenerator';
 import Root from 'Root';
 import UserServiceInstance from 'services/UserService';
 import { fetchUserSuccess } from 'store/user/actions';
@@ -27,45 +26,46 @@ const serverRenderer: any = () => (
     res: express.Response
 ) => {
     const headers = req.headers;
-    generateI18next(__SERVER__)
-        .then(() => {
-            const requestConfig = UserServiceInstance.getRequestConfig();
-            if (headers.cookie) {
-                requestConfig.headers.Cookie = headers.cookie;
-            }
-            return UserServiceInstance.getUser(requestConfig).catch(() => undefined);
-        })
-        .then((sessionUser: User | undefined) => {
-            if (sessionUser) {
-                res.locals.store.dispatch(fetchUserSuccess(_get(sessionUser, 'data')));
-            }
-            const extractor = new ChunkExtractor({ statsFile, entrypoints: ['bundle'] });
-            const tsx = extractor.collectChunks(
-                <Root
-                    store={res.locals.store}
-                    history={res.locals.history}
-                    helmetContext={helmetContext}
-                />
-            );
-            const content = renderToString(tsx);
-            const loadableScriptTags = extractor.getScriptTags();
-            const loadableStyleTags = extractor.getStyleTags();
 
-            const state = JSON.stringify(res.locals.store.getState());
-            const html = renderToString(
-                <Html
-                    css={[res.locals.assetPath('bundle.css'), res.locals.assetPath('vendor.css')]}
-                    scripts={[res.locals.assetPath('bundle.js'), res.locals.assetPath('vendor.js')]}
-                    helmetContext={helmetContext}
-                    loadableScriptTags={loadableScriptTags}
-                    loadableStyleTags={loadableStyleTags}
-                    state={state}
-                >
-                    {content}
-                </Html>
-            );
-            return res.send('<!doctype html>' + html);
-        });
+    const getSessionUser = (): Promise<User | undefined> => {
+        const requestConfig = UserServiceInstance.getRequestConfig();
+        if (headers.cookie) {
+            requestConfig.headers.Cookie = headers.cookie;
+        }
+        return UserServiceInstance.getUser(requestConfig).catch(() => undefined);
+    };
+
+    getSessionUser().then((sessionUser: User | undefined) => {
+        if (sessionUser) {
+            res.locals.store.dispatch(fetchUserSuccess(_get(sessionUser, 'data')));
+        }
+        const extractor = new ChunkExtractor({ statsFile, entrypoints: ['bundle'] });
+        const tsx = extractor.collectChunks(
+            <Root
+                store={res.locals.store}
+                history={res.locals.history}
+                helmetContext={helmetContext}
+            />
+        );
+        const content = renderToString(tsx);
+        const loadableScriptTags = extractor.getScriptTags();
+        const loadableStyleTags = extractor.getStyleTags();
+
+        const state = JSON.stringify(res.locals.store.getState());
+        const html = renderToString(
+            <Html
+                css={[res.locals.assetPath('bundle.css'), res.locals.assetPath('vendor.css')]}
+                scripts={[res.locals.assetPath('bundle.js'), res.locals.assetPath('vendor.js')]}
+                helmetContext={helmetContext}
+                loadableScriptTags={loadableScriptTags}
+                loadableStyleTags={loadableStyleTags}
+                state={state}
+            >
+                {content}
+            </Html>
+        );
+        return res.send('<!doctype html>' + html);
+    });
 };
 
 export default serverRenderer;

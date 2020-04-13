@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import IntlProvider from 'i18n/IntlProvider';
 import App from 'App';
-import './styles/main.global.css';
+import './styles';
 
 interface Props {
     store: Store;

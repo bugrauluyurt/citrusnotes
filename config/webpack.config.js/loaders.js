@@ -158,33 +158,7 @@ const scssModuleLoaderServer = {
 
 const scssModuleLoaderClient = {
     test: scssModuleRegex,
-    loader: [
-        require.resolve('css-hot-loader'),
-        MiniCssExtractPlugin.loader,
-        {
-            loader: 'css-loader',
-            options: {
-                modules: {
-                    // getLocalIdent: getCSSModuleLocalIdent,
-                    getLocalIdent: getLocalIdentWorkaround,
-                },
-                sourceMap: generateSourceMap,
-            },
-        },
-        {
-            loader: 'sass-loader',
-            options: {
-                sourceMap: generateSourceMap,
-            },
-        },
-        {
-            loader: 'sass-resources-loader',
-            options: {
-                // Provide path to the file with resources
-                resources: paths.scssResources,
-            },
-        },
-    ],
+    loader: [require.resolve('css-hot-loader'), ...scssModuleLoaderServer.loader],
 };
 
 const urlLoaderClient = {
