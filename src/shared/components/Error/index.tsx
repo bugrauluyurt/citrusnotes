@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 export interface ErrorProps {
     errorMessage: string;
 }
-export const Error: React.FC<ErrorProps> = ({ errorMessage }: ErrorProps) => {
+export const Error: React.FC<ErrorProps> = ({ errorMessage }: ErrorProps): JSX.Element => {
     const { t } = useTranslation();
     return (
         <>

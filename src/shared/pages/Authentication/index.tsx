@@ -9,7 +9,7 @@ import { ROUTE_LOGIN, ROUTE_REGISTER } from 'pages/Authentication/routes';
 import { getUserError, isUserAnonymous } from 'store/user/selectors';
 import styles from './Authentication.module.css';
 
-const Authentication: React.FC<any> = () => {
+const Authentication: React.FC<any> = (): JSX.Element => {
     const { path } = useRouteMatch();
     const errorMessage = useSelector(getUserError);
     const isAnonymous = useSelector(isUserAnonymous);

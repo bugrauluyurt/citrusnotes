@@ -10,7 +10,7 @@ import { isUserLoading } from 'store/user/selectors';
 import { userErrorDisable, userRegister } from 'store/user/actions';
 import { RegisterParams } from 'store/user/types';
 
-export const Register: React.FC<any> = () => {
+export const Register: React.FC<any> = (): JSX.Element => {
     const { t } = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();

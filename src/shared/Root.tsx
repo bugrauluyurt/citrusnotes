@@ -14,7 +14,7 @@ interface Props {
     helmetContext?: any;
 }
 
-const Router = (props: { [key: string]: any }) => {
+const Router = (props: { [key: string]: any }): JSX.Element => {
     return __BROWSER__ ? (
         <ConnectedRouter history={props.history}>{props.children}</ConnectedRouter>
     ) : (
@@ -22,7 +22,7 @@ const Router = (props: { [key: string]: any }) => {
     );
 };
 
-const Root: React.FC<Props> = ({ store, history, helmetContext = {} }) => {
+const Root: React.FC<Props> = ({ store, history, helmetContext = {} }): JSX.Element => {
     return (
         <Provider store={store}>
             <Router history={history}>

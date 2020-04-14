@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Settings = () => {
+const Settings = (): JSX.Element => {
     return (
         <React.Fragment>
             <h1>Settings component</h1>

@@ -13,7 +13,7 @@ import favicon from '../shared/assets/favicon.png';
 // import { ReactComponent as ReactLogo } from './assets/react.svg';
 //import 'antd/dist/antd.min.css';
 
-const App: React.FC<any> = () => {
+const App: React.FC<any> = (): JSX.Element => {
     // const { t } = useTranslation();
     // const dispatch = useDispatch();
     // const handleLocaleChange = useCallback(

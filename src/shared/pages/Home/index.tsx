@@ -6,7 +6,7 @@ import { useWindowSize } from 'hooks/useWindowSize';
 import { isUserLoading } from 'store/user/selectors';
 import styles from './Home.module.scss';
 
-const Home = () => {
+const Home = (): JSX.Element => {
     const userLoading = useSelector(isUserLoading);
     const [isAsideOpen, setAsideOpen] = useState(true);
     const useWindowSizeResult = useWindowSize(true);

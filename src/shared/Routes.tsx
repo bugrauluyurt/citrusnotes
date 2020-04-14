@@ -23,7 +23,7 @@ export const Settings = loadable(
     lazyRouteOptions
 );
 
-const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
+const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }): JSX.Element => {
     const isAnonymous = useSelector(isUserAnonymous);
     return (
         <Route
@@ -44,7 +44,7 @@ const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
     );
 };
 
-const Routes: React.FC<any> = () => {
+const Routes: React.FC<any> = (): JSX.Element => {
     return (
         <Switch>
             {/* Public Routes */}

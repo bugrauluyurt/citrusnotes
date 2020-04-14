@@ -10,7 +10,7 @@ import { userErrorDisable, userLogin } from 'store/user/actions';
 import { isUserLoading } from 'store/user/selectors';
 import { LoginParams } from 'store/user/types';
 
-export const Login: React.FC<any> = () => {
+export const Login: React.FC<any> = (): JSX.Element => {
     const { t } = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();

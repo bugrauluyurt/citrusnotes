@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Page = () => <div>Page 2</div>;
+const Page = (): JSX.Element => <div>Page 2</div>;
 
 export default Page;

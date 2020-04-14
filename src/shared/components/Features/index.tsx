@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './Features.module.scss';
 
-const Features = () => {
+const Features = (): JSX.Element => {
     const { t } = useTranslation();
     return (
         <React.Fragment>
