@@ -5,7 +5,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackConfig = require('../config/webpack.config.js')(process.env.NODE_ENV || 'development');
 const paths = require('../config/paths');
-const { logMessage, compilerPromise } = require('./utils');
+const { logMessage, compilerPromise, createFontsCss } = require('./utils');
 
 const app = express();
 
@@ -90,6 +90,7 @@ const start = async () => {
     try {
         await serverPromise;
         await clientPromise;
+        await createFontsCss();
     } catch (error) {
         logMessage(error, 'error');
     }

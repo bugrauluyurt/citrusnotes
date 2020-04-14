@@ -9,7 +9,6 @@ const chalk = require('chalk');
 const _includes = require('lodash/includes');
 const _forEach = require('lodash/forEach');
 const _isEmpty = require('lodash/isEmpty');
-const _replace = require('lodash/replace');
 
 const logMessage = (message, level = 'info') => {
     const color =
@@ -114,14 +113,20 @@ const createFontsCss = async () => {
         });
         // Write fonts.css file
         fs.writeFile(`${clientBuild}/static/fonts.css`, fontsCssText, () =>
-            logMessage('Fonts.css created successfully', 'none')
+            logMessage('[CREATE] Fonts.css created successfully', 'none')
         );
         // Update manifest file
-        parsedManifest['fonts.css'] = _replace(parsedManifest['bundle.css'], 'bundle', 'fonts');
-        fs.writeFile(`${clientBuild}/static/manifest.json`, JSON.stringify(parsedManifest), () => {
-            logMessage('Updated manifest file with fonts.css successfully', 'none');
-            resolve();
-        });
+        const host = process.env.HOST || 'http://localhost';
+        const port = process.env.PORT || 8500;
+        parsedManifest['fonts.css'] = `${host}:${port}/static/fonts.css`;
+        fs.writeFile(
+            `${clientBuild}/static/manifest.json`,
+            JSON.stringify(parsedManifest, null, 4),
+            () => {
+                logMessage('[UPDATE] Updated manifest file with fonts.css successfully', 'none');
+                resolve();
+            }
+        );
     });
 };
 

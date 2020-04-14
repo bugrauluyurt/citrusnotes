@@ -12,7 +12,6 @@ type Props = {
 };
 
 // Default CSS and JS injection disabled since Loadable loads all style tags and js tags
-const shouldInjectDefaultCss = false;
 const shouldInjectDefaultJs = false;
 
 const HTML = ({
@@ -34,10 +33,9 @@ const HTML = ({
                 {helmet.meta.toComponent()}
                 {helmet.link.toComponent()}
                 {helmet.script.toComponent()}
-                {shouldInjectDefaultCss &&
-                    css
-                        .filter(Boolean)
-                        .map((href) => <link key={href} rel="stylesheet" href={href} />)}
+                {css.filter(Boolean).map((href) => (
+                    <link key={href} rel="stylesheet" href={href} />
+                ))}
                 {parse(loadableStyleTags)}
                 <script
                     // eslint-disable-next-line react/no-danger
