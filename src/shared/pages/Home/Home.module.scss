@@ -6,11 +6,11 @@ $aside-lg-width: 18rem;
     .asideMenu {
         background-color: $aside-background;
         height: 100%;
-        width: 100%;
-        position: fixed;
-        transition: 0.3s all ease;
         left: -100%;
+        position: fixed;
         top: 0;
+        transition: 0.3s all ease;
+        width: 100%;
         @include for-tablet-portrait-up {
             left: -$aside-lg-width;
             width: $aside-lg-width;
@@ -27,7 +27,7 @@ $aside-lg-width: 18rem;
         }
         .homeWrapper {
             margin-left: $aside-lg-width;
-            width: calc(100% - $aside-lg-width);
+            width: calc(100% - 18rem);
         }
     }
 }
