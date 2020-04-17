@@ -1,0 +1,16 @@
+header {
+    display: flex;
+    height: 4rem;
+    overflow: hidden;
+    @include box-shadow();
+}
+
+.menuHamburgerHighlighted {
+    font-size: 1.5rem;
+    opacity: 0.8;
+    padding: 0.5rem 0.9rem 0.9rem;
+
+    &:hover {
+        opacity: 1;
+    }
+}

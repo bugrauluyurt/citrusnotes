@@ -42,10 +42,11 @@ generateI18next(__BROWSER__)
             .catch(() => undefined);
     })
     .then(() => {
-        let render = async () => {
+        let render = async (isHotModule: boolean = false) => {
+            const renderMethod = isHotModule ? ReactDOM.render : ReactDOM.hydrate;
             await loadableReady(() => {
                 epicMiddleware.run(rootEpic);
-                hydrate(<Root store={store} history={history} />, rootAppElement);
+                renderMethod(<Root store={store} history={history} />, rootAppElement);
             });
         };
 
@@ -59,7 +60,7 @@ generateI18next(__BROWSER__)
                 };
                 render = async () => {
                     try {
-                        await renderApp();
+                        await renderApp(true);
                     } catch (error) {
                         renderError(error);
                     }

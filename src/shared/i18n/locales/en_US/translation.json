@@ -16,5 +16,6 @@
   "login": "Login",
   "password": "Password",
   "loading": "Loading",
-  "error": "Error"
+  "error": "Error",
+  "home": "Home"
 }

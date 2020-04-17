@@ -14,3 +14,7 @@ body {
 #cr-app {
     background-color: #fdfdfd;
 }
+
+button:focus {
+    outline: none;
+}

@@ -1,7 +1,9 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { MenuFoldOutlined } from '@ant-design/icons';
 import LazyLoadingSpinner from 'components/LazyLoadingSpinner';
+import { Header } from 'components/Header';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { isUserLoading } from 'store/user/selectors';
 import styles from './Home.module.scss';
@@ -15,7 +17,7 @@ const Home = (): JSX.Element => {
             setAsideOpen(false);
         }
     }, [useWindowSizeResult, isAsideOpen]);
-    const handleSetAsideOpen = () => {
+    const handleSetAsideToggle = () => {
         setAsideOpen(!isAsideOpen);
     };
     return (
@@ -28,14 +30,16 @@ const Home = (): JSX.Element => {
                         [styles.asideOpen]: isAsideOpen,
                     })}
                 >
-                    <aside className={classNames(styles.asideMenu)} />
-                    <div className={classNames(styles.homeWrapper)}>
-                        <header>
-                            <button onClick={handleSetAsideOpen}>
-                                {isAsideOpen ? 'close' : 'open'}
+                    <aside className={styles.asideMenu}>
+                        {isAsideOpen && (
+                            <button onClick={handleSetAsideToggle} className={styles.menuHamburger}>
+                                <MenuFoldOutlined />
                             </button>
-                        </header>
-                        <main />
+                        )}
+                    </aside>
+                    <div className={styles.homeWrapper}>
+                        <Header onMenuToggle={handleSetAsideToggle} isAsideOpen={isAsideOpen} />
+                        <main>This is the main component</main>
                     </div>
                 </div>
             )}

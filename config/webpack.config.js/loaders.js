@@ -131,7 +131,7 @@ const scssModuleLoaderServer = {
     loader: [
         MiniCssExtractPlugin.loader,
         {
-            loader: 'css-loader',
+            loader: require.resolve('css-loader'),
             options: {
                 modules: {
                     // getLocalIdent: getCSSModuleLocalIdent,
@@ -141,7 +141,7 @@ const scssModuleLoaderServer = {
             },
         },
         {
-            loader: 'sass-loader',
+            loader: require.resolve('sass-loader'),
             options: {
                 sourceMap: generateSourceMap,
             },
