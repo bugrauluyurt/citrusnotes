@@ -2,7 +2,7 @@ import { loadableReady } from '@loadable/component';
 import { routerMiddleware } from 'connected-react-router';
 import _get from 'lodash/get';
 import React from 'react';
-import ReactDOM, { hydrate } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { createEpicMiddleware } from 'redux-observable';
 import generateI18next from 'i18n/I18nGenerator';
 import UserServiceInstance from 'services/UserService';
