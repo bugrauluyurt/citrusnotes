@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { UseWindowSizeHook } from 'hooks/types';
+import _clone from 'lodash/clone';
+import { IUseWindowSizeHook, IWindowSize } from 'hooks/useWindowSize.d';
 import {
     isBigDesktopUp,
     isDesktopUp,
@@ -8,19 +9,40 @@ import {
     isTabletPortraitUp,
 } from 'utils/utilsBreakPoints';
 
-const getSize = __BROWSER__
-    ? () => [window.innerWidth, window.innerHeight]
-    : () => [undefined, undefined];
+class WindowSizeDetail {
+    windowSize: number[] = [0, 0];
+    isPhone: boolean = false;
+    isTabletPortraitUp: boolean = false;
+    isTabletLandscapeUp: boolean = false;
+    isDesktopUp: boolean = false;
+    isBigDesktopUp: boolean = false;
+    constructor(windowSize: number[]) {
+        this.windowSize = windowSize;
+        this.isPhone = isPhone(windowSize[0]);
+        this.isTabletPortraitUp = isTabletPortraitUp(windowSize[0]);
+        this.isTabletLandscapeUp = isTabletLandscapeUp(windowSize[0]);
+        this.isDesktopUp = isDesktopUp(windowSize[0]);
+        this.isBigDesktopUp = isBigDesktopUp(windowSize[0]);
+    }
+}
 
-export const useWindowSize = (shouldListenWindowSize: boolean = false): UseWindowSizeHook => {
-    const [windowSize, setWindowSize] = useState(getSize());
+const getSize = __BROWSER__ ? () => [window.innerWidth, window.innerHeight] : () => [0, 0];
+
+export const useWindowSize = (shouldListenWindowSize: boolean = false): IUseWindowSizeHook => {
+    const [windowSize, setWindowSize] = useState({
+        current: getSize(),
+        previous: [0, 0],
+    } as IWindowSize);
 
     useEffect(() => {
         if (!__BROWSER__) {
             return;
         }
         const handleResize = () => {
-            setWindowSize(getSize());
+            setWindowSize((prevState: IWindowSize) => ({
+                current: getSize(),
+                previous: _clone(prevState.current),
+            }));
         };
         if (shouldListenWindowSize) {
             window.addEventListener('resize', handleResize);
@@ -30,11 +52,7 @@ export const useWindowSize = (shouldListenWindowSize: boolean = false): UseWindo
     }, [shouldListenWindowSize]);
 
     return {
-        windowSize,
-        isPhone: isPhone(windowSize[0]),
-        isTabletPortraitUp: isTabletPortraitUp(windowSize[0]),
-        isTabletLandscapeUp: isTabletLandscapeUp(windowSize[0]),
-        isDesktopUp: isDesktopUp(windowSize[0]),
-        isBigDesktopUp: isBigDesktopUp(windowSize[0]),
+        current: new WindowSizeDetail(windowSize.current),
+        previous: new WindowSizeDetail(windowSize.previous),
     };
 };

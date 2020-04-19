@@ -10,13 +10,25 @@ import styles from './Home.module.scss';
 
 const Home = (): JSX.Element => {
     const userLoading = useSelector(isUserLoading);
-    const [isAsideOpen, setAsideOpen] = useState(true);
     const useWindowSizeResult = useWindowSize(true);
+    const [isAsideOpen, setAsideOpen] = useState(useWindowSizeResult.current.isTabletLandscapeUp);
+    const isCurrentTableLandscapeUp = useWindowSizeResult.current.isTabletLandscapeUp;
     useEffect(() => {
-        if (useWindowSizeResult.isPhone && isAsideOpen) {
+        if (
+            !useWindowSizeResult.current.isTabletLandscapeUp &&
+            useWindowSizeResult.previous.isTabletLandscapeUp &&
+            isAsideOpen
+        ) {
             setAsideOpen(false);
         }
-    }, [useWindowSizeResult, isAsideOpen]);
+        if (
+            !useWindowSizeResult.previous.isTabletLandscapeUp &&
+            useWindowSizeResult.current.isTabletLandscapeUp &&
+            !isAsideOpen
+        ) {
+            setAsideOpen(true);
+        }
+    }, [isCurrentTableLandscapeUp]);
     const handleSetAsideToggle = () => {
         setAsideOpen(!isAsideOpen);
     };

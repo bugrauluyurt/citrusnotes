@@ -11,14 +11,14 @@ $aside-lg-width: 18rem;
         top: 0;
         transition: 0.3s all ease;
         width: 100%;
-        @include for-tablet-portrait-up {
+        @include for-tablet-landscape-up {
             left: -$aside-lg-width;
             width: $aside-lg-width;
         }
     }
     .homeWrapper {
         height: 100%;
-        transition: 0.3s all ease;
+        transition: 0.2s all ease-in-out;
         width: 100%;
     }
     .menuHamburger {
