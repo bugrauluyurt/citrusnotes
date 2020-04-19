@@ -6,6 +6,8 @@ import LazyLoadingSpinner from 'components/LazyLoadingSpinner';
 import { Header } from 'components/Header';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { isUserLoading } from 'store/user/selectors';
+import Image from 'components/Image';
+import Logo from '../../assets/citrusnotes_plain@2x.png';
 import styles from './Home.module.scss';
 
 const Home = (): JSX.Element => {
@@ -43,11 +45,17 @@ const Home = (): JSX.Element => {
                     })}
                 >
                     <aside className={styles.asideMenu}>
-                        {isAsideOpen && (
-                            <button onClick={handleSetAsideToggle} className={styles.menuHamburger}>
-                                <MenuFoldOutlined />
-                            </button>
-                        )}
+                        <div className={styles.asideMenuInner}>
+                            <Image url={Logo} className={styles.logo} />
+                            {isAsideOpen && (
+                                <button
+                                    onClick={handleSetAsideToggle}
+                                    className={styles.menuHamburger}
+                                >
+                                    <MenuFoldOutlined />
+                                </button>
+                            )}
+                        </div>
                     </aside>
                     <div className={styles.homeWrapper}>
                         <Header onMenuToggle={handleSetAsideToggle} isAsideOpen={isAsideOpen} />

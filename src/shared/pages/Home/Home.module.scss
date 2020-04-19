@@ -3,6 +3,11 @@ $aside-lg-width: 18rem;
 
 .wrapper {
     height: 100vh;
+    .logo {
+        margin-left: 0.9rem;
+        padding: 1.4rem 0.9rem 0.9rem;
+        width: 9rem;
+    }
     .asideMenu {
         background-color: $aside-background;
         height: 100%;
@@ -15,6 +20,11 @@ $aside-lg-width: 18rem;
             left: -$aside-lg-width;
             width: $aside-lg-width;
         }
+    }
+    .asideMenuInner {
+        height: 100%;
+        position: relative;
+        width: 100%;
     }
     .homeWrapper {
         height: 100%;
@@ -29,6 +39,7 @@ $aside-lg-width: 18rem;
         padding: $menu-btn-padding;
         position: absolute;
         right: 0;
+        top: 0;
         &:hover {
             color: $color-white;
         }
