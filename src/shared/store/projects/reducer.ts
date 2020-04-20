@@ -6,7 +6,7 @@ import { ProjectsState } from './types';
 
 export const initialState = Object.freeze<ProjectsState>({
     activeProjects: [],
-    activeProject: undefined,
+    activeProject: null,
     loading: false,
 });
 
@@ -20,13 +20,14 @@ export default (state: ProjectsState = initialState, action: Action): ProjectsSt
             case ProjectsActions.FETCH_PROJECTS_SUCCESS: {
                 draft.loading = false;
                 draft.activeProjects = action.payload;
+                // Selects the first project as active project, later this can use localstorage
                 draft.activeProject = _get(action.payload, '0');
                 return;
             }
             case ProjectsActions.FETCH_PROJECTS_ERROR: {
                 draft.loading = false;
                 draft.activeProjects = [];
-                draft.activeProject = undefined;
+                draft.activeProject = null;
                 return;
             }
         }
