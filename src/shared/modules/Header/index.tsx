@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuUnfoldOutlined } from '@ant-design/icons';
-import { IHeader } from 'components/Header/Header.module';
+import { IHeader } from 'modules/Header/Header.module';
 import HeaderPageName from './HeaderPageName/HeaderPageName';
 import styles from './Header.module.scss';
 

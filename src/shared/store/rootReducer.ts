@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { AppState } from 'store/app/types';
-import userReducer from 'store/user/reducer';
 import { UserState } from 'store/user/types';
+import userReducer from 'store/user/reducer';
+import projectsReducer from 'store/projects/reducer';
 import appReducer from './app/reducer';
 
 export interface RouteState {
@@ -20,6 +21,7 @@ const createRootReducer = (history: any) =>
         router: connectRouter(history),
         app: appReducer,
         user: userReducer,
+        projects: projectsReducer,
     });
 
 export default createRootReducer;

@@ -3,7 +3,7 @@ import pMinDelay from 'p-min-delay';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import LazyLoadingSpinner from 'shared/components/LazyLoadingSpinner';
+import LazyLoadingSpinner from 'shared/modules/LazyLoadingSpinner';
 import { isUserAnonymous } from 'store/user/selectors';
 
 const lazyRouteDelay = 2000;

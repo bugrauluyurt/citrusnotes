@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import _isObject from 'lodash/isObject';
 import { LoggerService } from 'services/LoggerService';
-import { IConnection } from 'services/connections/ConnectionInterface';
+import { IConnection } from 'services/connections/Connection';
 
 const axios = require('axios');
 
@@ -80,7 +80,8 @@ export class BaseConnection implements IConnection {
         method: RequestMethod,
         params?: any,
         body?: any,
-        requestConfig?: AxiosRequestConfig | object
+        requestConfig?: AxiosRequestConfig | object,
+        rejectionDisabled: boolean = false
     ): Promise<any> {
         const config = {
             url,
@@ -96,13 +97,17 @@ export class BaseConnection implements IConnection {
             }
             config.data = !isFormData && _isObject(body) ? JSON.stringify(body) : body || '';
         }
-        return new Promise<any>((resolve) => {
+        return new Promise<any>((resolve, reject) => {
             this.connectionInstance
                 .request(config)
                 .then((response) => resolve(response))
                 .catch((error) => {
+                    // @TODO Sentry.io integration should come here
                     const errorObj = error instanceof Error ? error : new Error(error);
-                    resolve(errorObj);
+                    if (rejectionDisabled) {
+                        return resolve(errorObj);
+                    }
+                    reject(errorObj);
                 });
         });
     }

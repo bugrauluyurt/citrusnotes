@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { LoginParams, RegisterParams, User } from 'store/user/types';
 import ConnectionFactory from 'services/connections/ConnectionFactory';
 import { RequestMethod } from 'services/connections/ConnectionBase';
-import { IConnection } from 'services/connections/ConnectionInterface';
+import { IConnection } from 'services/connections/Connection';
 
 class UserService {
     private connection: IConnection = ConnectionFactory.create();
@@ -17,28 +17,52 @@ class UserService {
             RequestMethod.GET,
             undefined,
             undefined,
-            requestConfig
+            requestConfig,
+            true
         );
     }
 
     getUserById(userId: string): Promise<User> {
-        return this.connection.request(`users/${userId}`, RequestMethod.GET);
+        return this.connection.request(
+            `users/${userId}`,
+            RequestMethod.GET,
+            undefined,
+            undefined,
+            undefined,
+            true
+        );
     }
 
-    loginUser(params: LoginParams): Promise<User> {
-        return this.connection.request('auth/local/login', RequestMethod.POST, undefined, params);
+    loginUser(body: LoginParams): Promise<User> {
+        return this.connection.request(
+            'auth/local/login',
+            RequestMethod.POST,
+            undefined,
+            body,
+            undefined,
+            true
+        );
     }
 
     logoutUser(): Promise<void> {
-        return this.connection.request('auth/local/logout', RequestMethod.POST);
+        return this.connection.request(
+            'auth/local/logout',
+            RequestMethod.POST,
+            undefined,
+            undefined,
+            undefined,
+            true
+        );
     }
 
-    registerUser(params: RegisterParams): Promise<User> {
+    registerUser(body: RegisterParams): Promise<User> {
         return this.connection.request(
             'auth/local/register',
             RequestMethod.POST,
             undefined,
-            params
+            body,
+            undefined,
+            true
         );
     }
 }

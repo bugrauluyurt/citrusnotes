@@ -5,8 +5,8 @@ const paths = require('../paths');
 
 const lessRegex = /\.less$/;
 const cssRegex = /\.css$/;
-const cssModuleRegex = /\.module\.css$/;
-const scssModuleRegex = /\.module\.scss$/;
+const cssModuleRegex = /\.(module|component)\.css$/;
+const scssModuleRegex = /\.(module|component)\.scss$/;
 
 // temporary wrapper function around getCSSModuleLocalIdent until this issue is resolved:
 // https://github.com/webpack-contrib/css-loader/pull/965

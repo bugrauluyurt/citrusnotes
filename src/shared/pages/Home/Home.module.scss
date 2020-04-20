@@ -26,7 +26,19 @@ $aside-lg-width: 18rem;
         position: relative;
         width: 100%;
     }
+    .asideMenuHeader {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        & > {
+            flex-grow: 0;
+        }
+    }
+    .asideMenuBody {
+        display: block;
+    }
     .homeWrapper {
+        background-color: #fdfdfd;
         height: 100%;
         transition: 0.2s all ease-in-out;
         width: 100%;

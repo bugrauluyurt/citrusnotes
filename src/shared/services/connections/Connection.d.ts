@@ -7,7 +7,8 @@ export declare interface IConnection {
         method: RequestMethod,
         params?: any,
         body?: any,
-        requestConfig?: AxiosRequestConfig
+        requestConfig?: AxiosRequestConfig,
+        rejectionDisabled?: boolean
     ): Promise<any>;
 
     getRequestConfig(): AxiosRequestConfig;

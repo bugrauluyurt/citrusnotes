@@ -2,11 +2,12 @@ import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { MenuFoldOutlined } from '@ant-design/icons';
-import LazyLoadingSpinner from 'components/LazyLoadingSpinner';
-import { Header } from 'components/Header';
+import LazyLoadingSpinner from 'modules/LazyLoadingSpinner';
+import { Header } from 'modules/Header';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { isUserLoading } from 'store/user/selectors';
-import Image from 'components/Image';
+import Image from 'modules/Image';
+import { Aside } from 'modules/Aside';
 import Logo from '../../assets/citrusnotes_plain@2x.png';
 import styles from './Home.module.scss';
 
@@ -46,15 +47,20 @@ const Home = (): JSX.Element => {
                 >
                     <aside className={styles.asideMenu}>
                         <div className={styles.asideMenuInner}>
-                            <Image url={Logo} className={styles.logo} />
-                            {isAsideOpen && (
-                                <button
-                                    onClick={handleSetAsideToggle}
-                                    className={styles.menuHamburger}
-                                >
-                                    <MenuFoldOutlined />
-                                </button>
-                            )}
+                            <div className={styles.asideMenuHeader}>
+                                <Image url={Logo} className={styles.logo} />
+                                {isAsideOpen && (
+                                    <button
+                                        onClick={handleSetAsideToggle}
+                                        className={styles.menuHamburger}
+                                    >
+                                        <MenuFoldOutlined />
+                                    </button>
+                                )}
+                            </div>
+                            <div className={styles.asideMenuBody}>
+                                <Aside />
+                            </div>
                         </div>
                     </aside>
                     <div className={styles.homeWrapper}>
